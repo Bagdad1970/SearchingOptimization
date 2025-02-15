@@ -1,14 +1,15 @@
 from abc import ABC, abstractmethod
 
 class AlgorithmInterface(ABC):
+
+    @abstractmethod
+    def set_params(self, **params):
+        pass
+
     @abstractmethod
     def execute(self):
         pass
 
     @abstractmethod
-    def get_graph(self):
-        pass
-
-    @abstractmethod
-    def get_point(self):
+    def surface_params(self) -> dict:
         pass
