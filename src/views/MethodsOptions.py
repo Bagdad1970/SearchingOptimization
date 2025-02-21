@@ -1,7 +1,8 @@
-from src.views.options.gradient_descent import GradientDescentOptionsWidget
-from PyQt6.QtWidgets import QWidget
+from src.views.Options import Options
+import src.views.options.gradient_descent as gradient_descent
 
-class GradientDescentOptions(QWidget, GradientDescentOptionsWidget):
+class GradientDescentOptions(Options, gradient_descent.Ui_Form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.get_params()

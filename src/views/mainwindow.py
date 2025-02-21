@@ -80,4 +80,3 @@ class Ui_MainWindow(object):
         self.ExecuteButton.setText(_translate("MainWindow", "Запустить"))
         self.SpecificMethod.setItemText(0, _translate("MainWindow", "Градиентный спуск"))
         self.label.setText(_translate("MainWindow", "Функция:"))
-        self.Function.setText(_translate("MainWindow", "x**2 + x * y + y ** 2"))

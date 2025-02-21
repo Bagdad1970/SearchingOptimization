@@ -5,7 +5,7 @@ from pyqtgraph.opengl import GLViewWidget, GLSurfacePlotItem, GLScatterPlotItem
 
 from src.entities.Point import Point
 
-class PlotWidget(GLViewWidget):
+class Plot(GLViewWidget):
     def __init__(self):
         super().__init__()
         self.set_background()
@@ -28,12 +28,12 @@ class PlotWidget(GLViewWidget):
         self.addItem(grid)
 
     def set_point(self, point: Point):
-        pos = np.array([point.get_vector()], dtype=np.float32)
+        pos = np.array([point.get_point()], dtype=np.float32)
         self.scatter_plot.setData(pos=pos, size=8, color=(1, 0, 0, 1), pxMode=True)
 
-    def set_surface(self, params):
-        x, y, function = params['x'], params['y'], params['function']
-        X, Y = np.meshgrid(x, y) # поставить здесь Point
+    def set_surface(self, *, function, point: Point):
+        x, y = point.create_points_array()
+        X, Y = np.meshgrid(x, y)
         Z = function(X, Y)
 
         surface = gl.GLSurfacePlotItem(x=x, y=y, z=Z, shader='heightColor', smooth=True)
