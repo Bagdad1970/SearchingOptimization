@@ -5,4 +5,3 @@ class GradientDescentOptions(Options, gradient_descent.Ui_Form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.get_params()
