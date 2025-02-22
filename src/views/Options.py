@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QLineEdit, QSpinBox, QDoubleSpinBox, QPlainTextEdit
+from PyQt6.QtWidgets import QWidget, QLineEdit, QSpinBox, QDoubleSpinBox
 from src.entities.Point import Point
 
 
@@ -14,9 +14,6 @@ class Options(QWidget):
                 point_coord1 = float(widget.text())
             elif widget_name == 'PointCoord2':
                 point_coord2 = float(widget.text())
-            #elif widget_name == 'PointCoord3':
-            #    if widget.text() != '':
-            #        point[2] = float(widget.text())
 
         return Point([point_coord1, point_coord2])
 
