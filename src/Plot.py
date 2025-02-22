@@ -1,7 +1,8 @@
 import numpy
 import numpy as np
-import pyqtgraph.opengl as gl
-from pyqtgraph.opengl import GLViewWidget, GLSurfacePlotItem, GLScatterPlotItem
+from PyQt6.QtGui import QColor
+from pyqtgraph import mkColor
+from pyqtgraph.opengl import GLViewWidget, GLSurfacePlotItem, GLScatterPlotItem, GLGridItem
 
 from src.entities.Point import Point
 
@@ -10,37 +11,58 @@ class Plot(GLViewWidget):
         super().__init__()
         self.set_background()
         self.set_camera()
-        self.add_grid()
+
+        self.grid = GLGridItem()
+        self.setup_grid()
 
         self.scatter_plot = GLScatterPlotItem()
         self.addItem(self.scatter_plot)
 
+        self.surface_plot = None
+
+        self.current_point = None
+
     def set_background(self):
-        self.setBackgroundColor('k')
+        self.setBackgroundColor(mkColor(0, 0, 0))
 
     def set_camera(self):
         self.setCameraPosition(distance=20, elevation=25, azimuth=45)
 
-    def add_grid(self, size=20, spacing=1):
-        grid = gl.GLGridItem()
-        grid.setSize(size, size)
-        grid.setSpacing(spacing, spacing)
-        self.addItem(grid)
+    def setup_grid(self, size=20, spacing=1):
+        self.grid.setSize(size, size, size)
+        self.grid.setSpacing(spacing, spacing, spacing)
+        self.grid.setColor(mkColor(255, 255, 255))
+        self.addItem(self.grid)
 
-    def set_point(self, point: Point):
-        pos = np.array([point.get_point()], dtype=np.float32)
-        self.scatter_plot.setData(pos=pos, size=8, color=(1, 0, 0, 1), pxMode=True)
+    def set_full_plot(self, function, point: Point):
+
+        self.set_point(function=function, point=point)
+        self.set_surface(function=function, point=point)
+
+    def set_point(self, *, function, point: Point):
+        """Обновляет точку на графике"""
+        if self.current_point is not None:
+            self.removeItem(self.current_point)  # Удаляем старую точку
+
+        three_dimension_point = Point([point[0], point[1], function(*point)])
+        self.current_point = GLScatterPlotItem(pos=np.array(three_dimension_point), color=(0, 0.5, 0, 1), size=20, pxMode=True)
+        print(f"точка {self.current_point.pos}")
+        self.addItem(self.current_point)
 
     def set_surface(self, *, function, point: Point):
-        x, y = point.create_points_array()
+        x_grid_size, y_grid_size, z_grid_size = self.grid.size()
+        x, y = point.create_points_array(x_length=x_grid_size, y_length=y_grid_size)
         X, Y = np.meshgrid(x, y)
         Z = function(X, Y)
 
-        surface = gl.GLSurfacePlotItem(x=x, y=y, z=Z, shader='heightColor', smooth=True)
+        # Создание поверхности
+        new_surface = GLSurfacePlotItem(x=x, y=y, z=Z)
 
-        self.set_point(Point([1, 2, 3]))
-        #old_surface = (item for item in self.items if isinstance(item, GLSurfacePlotItem))
-        #print(type(old_surface))
-        #if old_surface is not None:
-        #    self.removeItem(old_surface)
-        self.addItem(surface)
+        color = QColor(255, 39, 39, 255)
+        new_surface.setColor(color)
+
+        if self.surface_plot is not None:
+            self.removeItem(self.surface_plot)
+
+        self.surface_plot = new_surface
+        self.addItem(self.surface_plot)

@@ -7,8 +7,8 @@ class PointObserver:
     def add_point_observer(self, observer):
         self.observers.append(observer)
 
-    def notify_about_new_point(self, point: Point):
-        [observer.get_point_from_algorithm(point) for observer in self.observers]
+    def notify_about_new_point(self, function, point: Point):
+        [observer.get_point_from_algorithm(function, point) for observer in self.observers]
 
     def notify_about_new_iteration(self, iteration_info):
         [observer.get_iteration(iteration_info) for observer in self.observers]

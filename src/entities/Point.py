@@ -1,15 +1,16 @@
+import math
 import numpy as np
+
 
 class Point:
     def __init__(self, point=None):
-        if point is None:
-            self.point = []
-        else:
-            self.point = point
+        self.point = point if point is not None else []
 
-    def create_points_array(self) -> tuple:
-        x, y = self.point[0], self.point[1]
-        return np.linspace(x-20, x+20, 100), np.linspace(y-20, y+20, 100)
+    def create_points_array(self, *, x_length: float, y_length: float) -> tuple:
+        x_left_length, x_right_length = math.ceil( (self.point[0] - x_length) / 2), math.ceil( (self.point[0] + x_length) / 2)
+        y_left_length, y_right_length = math.ceil( (self.point[1] - y_length) / 2), math.ceil( (self.point[1] + y_length) / 2)
+        return (np.linspace(x_left_length, x_right_length, 100),
+                np.linspace(y_left_length, y_right_length, 100))
 
     def get_point(self):
         return self.point

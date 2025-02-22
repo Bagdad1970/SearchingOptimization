@@ -1,4 +1,5 @@
 from src.Plot import Plot
+from src.entities.Point import Point
 from src.model.Model import Model
 from src.model.strategies.GradientDescent import GradientDescent
 from src.views.MainView import MainView
@@ -59,8 +60,8 @@ class Presenter:
         self.model.add_point_observer(self)
         self.set_surface()
 
-    def get_point_from_algorithm(self, point):
-        self.plot.set_point(point)
+    def get_point_from_algorithm(self, function, point: Point):
+        self.plot.set_point(function=function, point=point)
 
     def get_iteration(self, iteration_info: str):
         self.iterations.appendPlainText( iteration_info )
@@ -86,13 +87,10 @@ class Presenter:
         # запуск метода
         self.model.execute()
 
-        pass
-
     def clean_iterations_info(self):
         self.view.ui.Iterations.setPlainText("")
 
     def set_surface(self):
         point = self.options.get_point()
         function = self.get_function()
-        self.plot.set_point(point)
-        #self.plot.set_surface(function=function, point=point)
+        self.plot.set_full_plot(function=function, point=point)
