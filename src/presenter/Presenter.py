@@ -16,6 +16,8 @@ class Presenter:
         self.plot = Plot()
         self.set_plot()
 
+        self.iterations = self.view.ui.Iterations
+
         self.options = None
         self.change_method()
 
@@ -60,6 +62,9 @@ class Presenter:
     def get_point_from_algorithm(self, point):
         self.plot.set_point(point)
 
+    def get_iteration(self, iteration_info: str):
+        self.iterations.appendPlainText( iteration_info )
+
     def set_params(self):
         function = self.get_function()
         method_params = self.options.get_params()  # сделать точку для всех алгоритмов
@@ -70,6 +75,8 @@ class Presenter:
 
     def execute(self):
         self.clean_iterations_info()  # очищается текст итераций
+
+        self.set_surface()
 
         function = self.get_function()  # получение функции
         method_params = self.options.get_params()  # получить параметры метода
@@ -87,4 +94,5 @@ class Presenter:
     def set_surface(self):
         point = self.options.get_point()
         function = self.get_function()
-        self.plot.set_surface(function=function, point=point)
+        self.plot.set_point(point)
+        #self.plot.set_surface(function=function, point=point)
