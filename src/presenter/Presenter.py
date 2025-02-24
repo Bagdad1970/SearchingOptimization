@@ -65,20 +65,16 @@ class Presenter:
         return function_from_str(self.view.ui.Function.text())
 
     def execute(self):
-        self.clean_iterations_info()  # очищается текст итераций
+        self.view.clean_iterations()
 
         self.set_surface()
 
-        function = self.get_function()  # получение функции
-        method_params = self.options.get_params()  # получить параметры метода
+        function = self.get_function()
+        method_params = self.options.get_params()
 
         self.model.set_params(function, **method_params)
 
-        # запуск метода
         self.model.execute()
-
-    def clean_iterations_info(self):
-        self.view.ui.Iterations.setPlainText("")
 
     def set_surface(self):
         point = self.options.get_point()

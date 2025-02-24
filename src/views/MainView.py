@@ -18,3 +18,6 @@ class MainView(QMainWindow):
 
     def execute(self):
         self.presenter.execute()
+
+    def clean_iterations(self):
+        self.ui.Iterations.setPlainText("")
