@@ -21,3 +21,6 @@ class MainView(QMainWindow):
 
     def clean_iterations(self):
         self.ui.Iterations.setPlainText("")
+
+    def get_function(self):
+        return self.ui.Function.text()

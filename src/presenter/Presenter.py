@@ -62,7 +62,7 @@ class Presenter:
         self.model.set_params(function, **method_params)
 
     def get_function(self):
-        return function_from_str(self.view.ui.Function.text())
+        return function_from_str(self.view.get_function())
 
     def execute(self):
         self.view.clean_iterations()
@@ -71,7 +71,6 @@ class Presenter:
 
         function = self.get_function()
         method_params = self.options.get_params()
-
         self.model.set_params(function, **method_params)
 
         self.model.execute()
