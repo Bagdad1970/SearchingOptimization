@@ -82,9 +82,6 @@ class GradientDescent(AlgorithmInterface):
             iteration_info = f"Итерация {current_iteration}: X {[round(p, 5) for p in self.point]}, f(X) = {self.function(*self.point):.6f}"
             self.algorithm_observer.iteration_observer.notify_all(iteration_info)
 
-            "Добавить вывод из-за чего остановлено выполнение"
-
-
         result = f"Результат: X {[round(p, 5) for p in self.point]}, f(X) = {self.function(*self.point):.6f}"
         self.algorithm_observer.iteration_observer.notify_all(result)
 
