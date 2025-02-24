@@ -1,14 +1,10 @@
-from abc import ABC, abstractmethod
+class ViewInterface:
 
-class ViewInterface(ABC):
-    @abstractmethod
     def add_iteration_info(self, iteration_info):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_params(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def set_surface(self, surface):
-        pass
+        raise NotImplementedError
