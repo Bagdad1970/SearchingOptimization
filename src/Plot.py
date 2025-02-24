@@ -46,7 +46,6 @@ class Plot(GLViewWidget):
 
         three_dimension_point = Point([point[0], point[1], function(*point)])
         self.current_point = GLScatterPlotItem(pos=np.array(three_dimension_point), color=(0, 0.5, 0, 1), size=20, pxMode=True)
-        print(f"точка {self.current_point.pos}")
         self.addItem(self.current_point)
 
     def set_surface(self, *, function, point: Point):
