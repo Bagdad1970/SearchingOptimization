@@ -12,8 +12,7 @@ class Model:
         return self.strategy.get_initial_surface_params()
 
     def execute(self):
-        solutions = self.strategy.execute()
-        return solutions
+        self.strategy.execute()
 
     def add_observer(self, point_observer):
         self.strategy.add_observer(point_observer)

@@ -1,3 +1,5 @@
+from pyqtgraph.opengl import GLScatterPlotItem
+
 from src.Plot import Plot
 from src.entities.Point import Point
 from src.model.Model import Model

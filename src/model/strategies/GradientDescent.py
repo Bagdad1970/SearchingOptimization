@@ -1,3 +1,5 @@
+from time import sleep
+
 import src.math_functions as math_functions
 from src.entities.Point import Point
 from src.model.AlgorithmInterface import AlgorithmInterface
@@ -16,7 +18,7 @@ class GradientDescent(AlgorithmInterface):
         self.eps = 1e-6  # Общая точность
         self.eps1 = 1e-6  # Точность для градиента
         self.eps2 = 1e-6  # Точность для изменения точки (можно убрать)
-        self.step = 0.01  # Начальный шаг
+        self.step = 0.1  # Начальный шаг
         self.max_iteration = 100  # Максимальное количество итераций
 
     def add_observer(self, observer):
@@ -44,7 +46,6 @@ class GradientDescent(AlgorithmInterface):
 
     def execute(self):
         current_iteration = 0
-        stop_reason = None
 
         while True:
             gradient = math_functions.gradient(function=self.function, point=self.point)
@@ -60,14 +61,11 @@ class GradientDescent(AlgorithmInterface):
 
             new_point = self.next_point(self.point, gradient, self.step)
 
-            # Проверка уменьшения функции, если нет — уменьшаем шаг
             function_value_next_point, function_value_current_point = self.function(*new_point), self.function(*self.point)
             while function_value_next_point >= function_value_current_point:
                 self.step /= 2
                 new_point = self.next_point(self.point, gradient, self.step)
                 function_value_next_point = self.function(*new_point)
-
-            self.algorithm_observer.point_observer.notify_all(self.function, new_point)
 
             distance_points_norm = (new_point - self.point).equalid_norm()
             distance_functions_value = abs(self.function(*new_point) - self.function(*self.point))
@@ -79,10 +77,12 @@ class GradientDescent(AlgorithmInterface):
                 self.point = new_point
                 current_iteration += 1
 
-            iteration_info = f"Итерация {current_iteration}: X {[round(p, 5) for p in self.point]}, f(X) = {self.function(*self.point):.6f}"
+            self.algorithm_observer.point_observer.notify_all(self.function, self.point)
+
+            iteration_info = f"Итерация {current_iteration}: точка ({self.point[0]:5f}, {self.point[1]:.5f}, {self.function(*self.point):.5f})"
             self.algorithm_observer.iteration_observer.notify_all(iteration_info)
 
-        result = f"Результат: X {[round(p, 5) for p in self.point]}, f(X) = {self.function(*self.point):.6f}"
+        result = f"Результат: точка ({self.point[0]:5f}, {self.point[1]:.5f}, {self.function(*self.point):.5f})"
         self.algorithm_observer.iteration_observer.notify_all(result)
 
         self.algorithm_observer.stop_reason_observer.notify_all(stop_reason)
