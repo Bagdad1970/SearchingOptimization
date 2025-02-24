@@ -15,9 +15,9 @@ class Model:
         solutions = self.strategy.execute()
         return solutions
 
-    def add_point_observer(self, point_observer):
-        self.strategy.add_point_observer(point_observer)
+    def add_observer(self, point_observer):
+        self.strategy.add_observer(point_observer)
 
     def remove_point_observers(self):
         if self.strategy is not None:
-            self.strategy.remove_point_observers()
+            self.strategy.remove_observers()

@@ -28,10 +28,6 @@ class Presenter:
         self.view.ui.SpecificMethod.currentTextChanged.connect(self.change_method)
         self.view.ui.ExecuteButton.clicked.connect(self.execute)
 
-    def create_surface(self, *, function, x, y): # replace surface instead of create
-        #self.plot.create_surface(x=x, y=y, function=function)
-        pass
-
     def set_option_widget(self):
         if self.view.ui.Options.widget() is not None:
             self.view.ui.Options.removeWidget(self.view.ui.Options.widget())
@@ -39,15 +35,6 @@ class Presenter:
 
     def set_plot(self):
         self.view.ui.Plot.addWidget(self.plot)
-
-    def create_strategy(self):
-        current_method = self.view.ui.SpecificMethod.currentText()
-        params = self.options.get_params()
-        #self.view.findChild()
-
-
-        #if current_method == "Градиентный спуск":
-        #    return GradientDescent(**params)
 
     def change_method(self):
         self.model.remove_point_observers()
@@ -57,14 +44,17 @@ class Presenter:
             self.options = GradientDescentOptions()
 
         self.set_option_widget()
-        self.model.add_point_observer(self)
+        self.model.add_observer(self)
         self.set_surface()
 
-    def get_point_from_algorithm(self, function, point: Point):
+    def get_point(self, function, point: Point):
         self.plot.set_point(function=function, point=point)
 
     def get_iteration(self, iteration_info: str):
-        self.iterations.appendPlainText( iteration_info )
+        self.iterations.appendPlainText(iteration_info)
+
+    def get_stop_reason(self, stop_reason: str):
+        self.iterations.appendPlainText(stop_reason)
 
     def set_params(self):
         function = self.get_function()
