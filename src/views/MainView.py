@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QMainWindow
-from src.views.ViewInterface import ViewInterface
+from src.views.view_interface import ViewInterface
 from src.views.mainview import Ui_MainWindow
 
 class MainView(QMainWindow):

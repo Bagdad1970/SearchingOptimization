@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import QApplication
 import sys
 
-from src.model.Model import Model
-from src.presenter.Presenter import Presenter
+from src.model.model import Model
+from src.presenter.presenter import Presenter
 from src.views.MainView import MainView
 
 def main():

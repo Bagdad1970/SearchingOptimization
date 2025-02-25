@@ -1,5 +1,5 @@
-from src.entities.Point import Point
-from src.model.Observers.Observer import Observer
+from src.entities.point import Point
+from src.model.observers.observer import Observer
 
 class PointObserver(Observer):
     def __init__(self):

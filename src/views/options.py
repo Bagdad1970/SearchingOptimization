@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QLineEdit, QSpinBox, QDoubleSpinBox
-from src.entities.Point import Point
+from src.entities.point import Point
 
 
 class Options(QWidget):

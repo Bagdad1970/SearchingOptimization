@@ -1,6 +1,6 @@
-from src.model.Observers.IterationObserver import IterationObserver
-from src.model.Observers.PointObserver import PointObserver
-from src.model.Observers.StopReasonObserver import StopReasonObserver
+from src.model.observers.iteration_observer import IterationObserver
+from src.model.observers.point_observer import PointObserver
+from src.model.observers.stop_reason_observer import StopReasonObserver
 
 
 class AlgorithmObserver:

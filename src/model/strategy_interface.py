@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class AlgorithmInterface(ABC):
+class StrategyInterface(ABC):
 
     @abstractmethod
     def set_params(self, function, **params):

@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'src/views/options/gradient_descent.ui'
+# Form implementation generated from reading ui file 'src/views/options_views/gradient_descent.ui'
 #
 # Created by: PyQt6 UI code generator 6.8.1
 #

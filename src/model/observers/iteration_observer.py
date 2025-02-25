@@ -1,4 +1,4 @@
-from src.model.Observers.Observer import Observer
+from src.model.observers.observer import Observer
 
 class IterationObserver(Observer):
     def __init__(self):

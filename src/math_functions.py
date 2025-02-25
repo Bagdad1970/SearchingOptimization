@@ -1,4 +1,4 @@
-from src.entities.Point import Point
+from src.entities.point import Point
 
 def gradient(*, function, point: Point, h=1e-6):
     """

@@ -3,7 +3,7 @@ import PyQt6.QtGui
 import pyqtgraph
 from pyqtgraph.opengl import GLViewWidget, GLSurfacePlotItem, GLScatterPlotItem, GLGridItem
 
-from src.entities.Point import Point
+from src.entities.point import Point
 
 class Plot(GLViewWidget):
     def __init__(self):
@@ -37,7 +37,6 @@ class Plot(GLViewWidget):
         if self.current_point is not None:
             self.removeItem(self.current_point)
 
-        # Получаем координаты точки
         three_dimension_point = [point[0], point[1], function(*point)]
         three_dimension_array = np.array([three_dimension_point])  # Преобразуем в [[x, y, z]]
 

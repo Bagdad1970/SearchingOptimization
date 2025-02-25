@@ -1,15 +1,9 @@
-from time import sleep
-
 import src.math_functions as math_functions
-from src.entities.Point import Point
-from src.model.AlgorithmInterface import AlgorithmInterface
-from src.model.AlgorithmObserver import AlgorithmObserver
-from src.model.Observers.IterationObserver import IterationObserver
-from src.model.Observers.PointObserver import PointObserver
-from src.model.Observers.StopReasonObserver import StopReasonObserver
+from src.entities.point import Point
+from src.model.strategy_interface import StrategyInterface
+from src.model.algorithm_observer import AlgorithmObserver
 
-
-class GradientDescent(AlgorithmInterface):
+class GradientDescent(StrategyInterface):
     def __init__(self):
         super().__init__()
         self.algorithm_observer = AlgorithmObserver()

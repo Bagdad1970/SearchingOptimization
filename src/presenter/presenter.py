@@ -1,11 +1,11 @@
 from pyqtgraph.opengl import GLScatterPlotItem
 
-from src.Plot import Plot
-from src.entities.Point import Point
-from src.model.Model import Model
-from src.model.strategies.GradientDescent import GradientDescent
+from src.plot import Plot
+from src.entities.point import Point
+from src.model.model import Model
+from src.model.strategies.gradient_descent import GradientDescent
 from src.views.MainView import MainView
-from src.views.MethodsOptions import GradientDescentOptions
+from src.views.methods_options import GradientDescentOptions
 from src.function_from_str import function_from_str
 
 
