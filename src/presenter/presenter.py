@@ -1,11 +1,9 @@
-from pyqtgraph.opengl import GLScatterPlotItem
-
-from src.plot import Plot
 from src.entities.point import Point
 from src.model.model import Model
 from src.model.strategies.gradient_descent import GradientDescent
-from src.views.MainView import MainView
-from src.views.methods_options import GradientDescentOptions
+from src.presenter.plot_presenter import PlotPresenter
+from src.views.mainview import MainView
+from src.views.options_views.gradient_descent import GradientDescentOptions
 from src.function_from_str import function_from_str
 
 
@@ -16,10 +14,7 @@ class Presenter:
 
         self.view.set_presenter(self)
 
-        self.plot = Plot()
-        self.set_plot()
-
-        self.iterations = self.view.ui.Iterations
+        self.iterations = self.view.Iterations
 
         self.options = None
         self.change_method()
@@ -27,20 +22,20 @@ class Presenter:
         self.connect_signals()
 
     def connect_signals(self):
-        self.view.ui.SpecificMethod.currentTextChanged.connect(self.change_method)
-        self.view.ui.ExecuteButton.clicked.connect(self.execute)
+        self.view.SpecificMethod.currentTextChanged.connect(self.change_method)
+        self.view.ExecuteButton.clicked.connect(self.execute)
+
+    def set_plot_presenter(self, plot_presenter: PlotPresenter):
+        self.plot_presenter = plot_presenter
 
     def set_option_widget(self):
-        if self.view.ui.Options.widget() is not None:
-            self.view.ui.Options.removeWidget(self.view.ui.Options.widget())
-        self.view.ui.Options.addWidget(self.options)
-
-    def set_plot(self):
-        self.view.ui.Plot.addWidget(self.plot)
+        if self.view.Options.widget() is not None:
+            self.view.Options.removeWidget(self.view.ui.Options.widget())
+        self.view.Options.addWidget(self.options)
 
     def change_method(self):
         self.model.remove_point_observers()
-        current_text = self.view.ui.SpecificMethod.currentText()
+        current_text = self.view.SpecificMethod.currentText()
         if current_text == "Градиентный спуск":
             self.model.set_strategy(GradientDescent())
             self.options = GradientDescentOptions()
@@ -69,7 +64,7 @@ class Presenter:
     def execute(self):
         self.view.clean_iterations()
 
-        self.set_surface()
+        self.plot.set_surface()
 
         function = self.get_function()
         method_params = self.options.get_params()

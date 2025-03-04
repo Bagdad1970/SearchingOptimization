@@ -5,7 +5,7 @@ from pyqtgraph.opengl import GLViewWidget, GLSurfacePlotItem, GLScatterPlotItem,
 
 from src.entities.point import Point
 
-class Plot(GLViewWidget):
+class PlotWidget(GLViewWidget):
     def __init__(self):
         super().__init__()
         self.set_background()
@@ -23,7 +23,7 @@ class Plot(GLViewWidget):
     def set_camera(self):
         self.setCameraPosition(distance=20, elevation=25, azimuth=45)
 
-    def setup_grid(self, size=30, spacing=1):
+    def setup_grid(self, *, size=30, spacing=1):
         self.grid = GLGridItem()
         self.grid.setSize(size, size)
         self.grid.setSpacing(spacing, spacing)
@@ -33,19 +33,21 @@ class Plot(GLViewWidget):
     def set_full_plot(self, function, point: Point):
         self.set_surface(function=function, point=point)
 
-    def set_point(self, *, function, point: Point):
+    def set_point(self, function, point: Point):
         if self.current_point is not None:
             self.removeItem(self.current_point)
 
         three_dimension_point = [point[0], point[1], function(*point)]
-        three_dimension_array = np.array([three_dimension_point])  # Преобразуем в [[x, y, z]]
+        three_dimension_array = np.array([three_dimension_point])
 
-        self.current_point = GLScatterPlotItem(
+        point = GLScatterPlotItem(
             pos=three_dimension_array,
             color=(0, 0.5, 0, 1),
             size=20,
             pxMode=True
         )
+
+        self.current_point = point
         self.addItem(self.current_point)
 
     def set_surface(self, *, function, point: Point):

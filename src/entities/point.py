@@ -15,12 +15,7 @@ class Point:
     def get_point(self):
         return self.point
 
-    @classmethod
-    def toPoint(cls, expression):
-        return Point(expression)
-
     def equalid_norm(self):
-        """Вычисление евклидовой нормы вектора"""
         return sum(x ** 2 for x in self.point) ** 0.5
 
     def scalar_multiply(self, scalar):
@@ -41,9 +36,6 @@ class Point:
     def append(self, value):
         self.point.append(value)
 
-    def __repr__(self):
-        return f"Point({self.point})"
-
     def copy(self):
         return Point(self.point.copy())
 
@@ -63,3 +55,6 @@ class Point:
     def __setitem__(self, index, value):
         """Позволяет изменять элементы по индексу: v[0] = 10"""
         self.point[index] = value
+
+    def __repr__(self):
+        return f"Point({self.point})"

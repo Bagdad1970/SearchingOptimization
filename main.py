@@ -3,13 +3,14 @@ import sys
 
 from src.model.model import Model
 from src.presenter.presenter import Presenter
-from src.views.MainView import MainView
+from src.views.mainview import MainView
 
 def main():
     app = QApplication(sys.argv)
     view = MainView()
     model = Model()
     presenter = Presenter(view=view, model=model)
+    view.set_presenter(presenter)
     view.show()
     app.exec()
 
