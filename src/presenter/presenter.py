@@ -2,7 +2,6 @@ from src.entities.point import Point
 from src.model.model import Model
 from src.model.strategies.gradient_descent import GradientDescent
 from src.plot_widget import PlotWidget
-from src.presenter.plot_presenter import PlotPresenter
 from src.views.mainview import MainView
 from src.views.options_views.gradient_descent import GradientDescentOptions
 from src.function_from_str import function_from_str
@@ -28,9 +27,6 @@ class Presenter:
     def connect_signals(self):
         self.view.SpecificMethod.currentTextChanged.connect(self.change_method)
         self.view.ExecuteButton.clicked.connect(self.execute)
-
-    def set_plot_presenter(self, plot_presenter: PlotPresenter):
-        self.plot_presenter = plot_presenter
 
     def set_option_widget(self):
         if self.view.Options.widget() is not None:

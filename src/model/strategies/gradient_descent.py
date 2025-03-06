@@ -11,7 +11,7 @@ class GradientDescent(StrategyInterface):
         self.point = None  # Начальная точка
         self.eps = 1e-6  # Общая точность
         self.eps1 = 1e-6  # Точность для градиента
-        self.eps2 = 1e-6  # Точность для изменения точки (можно убрать)
+        self.eps2 = 1e-6  # Точность для изменения точки
         self.step = 0.1  # Начальный шаг
         self.max_iteration = 100  # Максимальное количество итераций
 
