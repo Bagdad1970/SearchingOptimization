@@ -9,22 +9,13 @@ class MainView(QMainWindow):
         super().__init__()
         uic.loadUi('src/views/mainwindow.ui', self)  # Загружаем UI в QWidget
 
-        #self.plot = PlotWidget()
-        #self.set_plot()
-
         self.presenter = None
 
-    def set_iteration_view(self, iteration_view):
-        pass
-
-    def set_plot(self):
-        self.Plot.addWidget(self.plot)
+    def set_plot(self, plot):
+        self.Plot.addWidget(plot)
 
     def set_presenter(self, presenter):
         self.presenter = presenter
-
-    def set_plot(self):
-        self.presenter.set_plot()
 
     def execute(self):
         self.presenter.execute()
@@ -34,3 +25,9 @@ class MainView(QMainWindow):
 
     def get_function(self):
         return self.Function.text()
+
+    def add_iteration_info(self,iteration_info: str):
+        self.Iterations.appendPlainText(iteration_info)
+
+    def add_stop_reason(self, stop_reason: str):
+        self.Iterations.appendPlainText(stop_reason)

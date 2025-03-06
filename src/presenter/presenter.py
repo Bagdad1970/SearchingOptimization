@@ -1,6 +1,7 @@
 from src.entities.point import Point
 from src.model.model import Model
 from src.model.strategies.gradient_descent import GradientDescent
+from src.plot_widget import PlotWidget
 from src.presenter.plot_presenter import PlotPresenter
 from src.views.mainview import MainView
 from src.views.options_views.gradient_descent import GradientDescentOptions
@@ -13,6 +14,9 @@ class Presenter:
         self.model = model
 
         self.view.set_presenter(self)
+
+        self.plot = PlotWidget()
+        self.view.set_plot(self.plot)
 
         self.iterations = self.view.Iterations
 
@@ -33,25 +37,24 @@ class Presenter:
             self.view.Options.removeWidget(self.view.ui.Options.widget())
         self.view.Options.addWidget(self.options)
 
+    def add_observers(self, **observers):
+        self.model.add_observer('point_observer', observers['point_observer'])
+        self.model.add_observer('iteration_observer', observers['iteration_observer'])
+        self.model.add_observer('stop_reason_observer', observers['stop_reason_observer'])
+
     def change_method(self):
-        self.model.remove_point_observers()
+        #self.model.remove_point_observers()
         current_text = self.view.SpecificMethod.currentText()
         if current_text == "Градиентный спуск":
             self.model.set_strategy(GradientDescent())
             self.options = GradientDescentOptions()
 
         self.set_option_widget()
-        self.model.add_observer(self)
-        self.set_surface()
+        self.add_observers(point_observer=self, stop_reason_observer=self.view, iteration_observer=self.view)
+        self.set_plot()
 
     def get_point(self, function, point: Point):
         self.plot.set_point(function=function, point=point)
-
-    def get_iteration(self, iteration_info: str):
-        self.iterations.appendPlainText(iteration_info)
-
-    def get_stop_reason(self, stop_reason: str):
-        self.iterations.appendPlainText(stop_reason)
 
     def set_params(self):
         function = self.get_function()
@@ -64,7 +67,7 @@ class Presenter:
     def execute(self):
         self.view.clean_iterations()
 
-        self.plot.set_surface()
+        self.set_plot()
 
         function = self.get_function()
         method_params = self.options.get_params()
@@ -72,7 +75,7 @@ class Presenter:
 
         self.model.execute()
 
-    def set_surface(self):
+    def set_plot(self):
         point = self.options.get_point()
         function = self.get_function()
         self.plot.set_full_plot(function=function, point=point)

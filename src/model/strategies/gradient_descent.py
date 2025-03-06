@@ -6,7 +6,7 @@ from src.model.algorithm_observer import AlgorithmObserver
 class GradientDescent(StrategyInterface):
     def __init__(self):
         super().__init__()
-        self.algorithm_observer = AlgorithmObserver()
+        self.algorithm_observer = None
         self.function = None  # Целевая функция
         self.point = None  # Начальная точка
         self.eps = 1e-6  # Общая точность
@@ -15,15 +15,8 @@ class GradientDescent(StrategyInterface):
         self.step = 0.1  # Начальный шаг
         self.max_iteration = 100  # Максимальное количество итераций
 
-    def add_observer(self, observer):
-        self.algorithm_observer.point_observer.add_observer(observer)
-        self.algorithm_observer.iteration_observer.add_observer(observer)
-        self.algorithm_observer.stop_reason_observer.add_observer(observer)
-
-    def remove_observers(self):
-        self.algorithm_observer.point_observer.remove_observers()
-        self.algorithm_observer.iteration_observer.add_observers()
-        self.algorithm_observer.stop_reason_observer.add_observers()
+    def set_algorithm_observer(self, algorithm_observer: AlgorithmObserver):
+        self.algorithm_observer = algorithm_observer
 
     def set_params(self, function, **params):
         self.function = function  # Целевая функция

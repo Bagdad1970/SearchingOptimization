@@ -5,4 +5,4 @@ class IterationObserver(Observer):
         super().__init__()
 
     def notify_all(self, iteration_info):
-        [observer.get_iteration(iteration_info) for observer in self.observers]
+        [observer.add_iteration_info(iteration_info) for observer in self.observers]

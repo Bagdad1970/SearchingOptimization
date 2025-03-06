@@ -20,3 +20,16 @@ class AlgorithmObserver:
     @property
     def stop_reason_observer(self):
         return self._stop_reason_observer
+
+    def add_observer(self, key: str, observer):
+        if key == 'point_observer':
+            self.point_observer.add_observer(observer)
+            print("iteration_observer")
+        elif key == 'stop_reason_observer':
+            self.stop_reason_observer.add_observer(observer)
+            print("stop_reason_observer")
+        elif key == 'iteration_observer':
+            self.iteration_observer.add_observer(observer)
+            print("iteration_observer")
+        else:
+            raise TypeError("Invalid Observer class")

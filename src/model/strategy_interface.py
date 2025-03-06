@@ -1,11 +1,9 @@
-from abc import ABC, abstractmethod
-
-class StrategyInterface(ABC):
-
-    @abstractmethod
+class StrategyInterface:
     def set_params(self, function, **params):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def execute(self):
-        pass
+        raise NotImplementedError
+
+    def set_algorithm_observer(self, algorithm_observer):
+        raise NotImplementedError
