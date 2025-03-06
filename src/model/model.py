@@ -20,6 +20,5 @@ class Model:
     def add_observer(self, key, observer):
         self.algorithm_observer.add_observer(key, observer)
 
-    #def remove_point_observers(self):
-    #    if self.strategy is not None:
-    #        self.strategy.remove_observers()
+    def remove_observers(self):
+        self.algorithm_observer.remove_observers()

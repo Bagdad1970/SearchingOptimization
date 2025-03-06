@@ -33,3 +33,8 @@ class AlgorithmObserver:
             print("iteration_observer")
         else:
             raise TypeError("Invalid Observer class")
+
+    def remove_observers(self):
+        self.point_observer.remove_observers()
+        self.stop_reason_observer.remove_observers()
+        self.iteration_observer.remove_observers()

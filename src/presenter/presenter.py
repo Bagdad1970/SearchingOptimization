@@ -34,7 +34,7 @@ class Presenter:
 
     def set_option_widget(self):
         if self.view.Options.widget() is not None:
-            self.view.Options.removeWidget(self.view.ui.Options.widget())
+            self.view.Options.removeWidget(self.view.Options.widget())
         self.view.Options.addWidget(self.options)
 
     def add_observers(self, **observers):
@@ -43,7 +43,7 @@ class Presenter:
         self.model.add_observer('stop_reason_observer', observers['stop_reason_observer'])
 
     def change_method(self):
-        #self.model.remove_point_observers()
+        self.model.remove_observers()
         current_text = self.view.SpecificMethod.currentText()
         if current_text == "Градиентный спуск":
             self.model.set_strategy(GradientDescent())
