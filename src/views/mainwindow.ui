@@ -135,6 +135,11 @@
       <string>Градиентный спуск</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Симплекс метод</string>
+     </property>
+    </item>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">

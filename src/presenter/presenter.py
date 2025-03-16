@@ -1,9 +1,10 @@
 from src.entities.point import Point
 from src.model.model import Model
 from src.model.strategies.gradient_descent import GradientDescent
+from src.model.strategies.simplex_method import SimplexMethod
 from src.plot_widget import PlotWidget
 from src.views.mainview import MainView
-from src.views.options_views.gradient_descent import GradientDescentOptions
+import src.views.options_views.option_classes as option_classes
 from src.function_from_str import function_from_str
 
 
@@ -29,9 +30,14 @@ class Presenter:
         self.view.ExecuteButton.clicked.connect(self.execute)
 
     def set_option_widget(self):
-        if self.view.Options.widget() is not None:
-            self.view.Options.removeWidget(self.view.Options.widget())
-        self.view.Options.addWidget(self.options)
+        # Очищаем layout (удаляем все виджеты)
+        while self.view.Options.layout().count():
+            item = self.view.Options.layout().takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        # Добавляем новый виджет
+        self.view.Options.layout().addWidget(self.options)
 
     def add_observers(self, **observers):
         self.model.add_observer('point_observer', observers['point_observer'])
@@ -43,7 +49,10 @@ class Presenter:
         current_text = self.view.SpecificMethod.currentText()
         if current_text == "Градиентный спуск":
             self.model.set_strategy(GradientDescent())
-            self.options = GradientDescentOptions()
+            self.options = option_classes.GradientDescentOptions()
+        elif current_text == "Симплекс метод":
+            self.model.set_strategy(SimplexMethod())
+            self.options = option_classes.SimplexMethodOptions()
 
         self.set_option_widget()
         self.add_observers(point_observer=self, stop_reason_observer=self.view, iteration_observer=self.view)

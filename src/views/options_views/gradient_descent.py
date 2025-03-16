@@ -1,8 +1,0 @@
-from PyQt6.QtWidgets import QWidget
-from PyQt6 import uic
-from src.views.options import Options
-
-class GradientDescentOptions(Options, QWidget):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('src/views/options_views/gradient_descent.ui', self)
