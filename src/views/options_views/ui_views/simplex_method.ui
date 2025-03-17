@@ -465,7 +465,7 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_7">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="limitations">
        <item>
         <widget class="QLabel" name="label_8">
          <property name="font">
@@ -517,14 +517,14 @@
     </spacer>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="add_limitations_btn">
      <property name="text">
       <string>Добавить ограничение</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QPushButton" name="add_limitations_btn">
+    <widget class="QPushButton" name="delete_limitations_btn">
      <property name="text">
       <string>Удалить ограничения</string>
      </property>
