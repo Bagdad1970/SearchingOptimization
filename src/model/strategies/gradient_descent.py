@@ -18,6 +18,10 @@ class GradientDescent(StrategyInterface):
     def set_algorithm_observer(self, algorithm_observer: AlgorithmObserver):
         self.algorithm_observer = algorithm_observer
 
+    @classmethod
+    def initial_function(cls):
+        return '2*x1**2 + x1*x2 + x2**2'
+
     def set_params(self, function, **params):
         self.function = function  # Целевая функция
         self.point = params['point']
@@ -64,7 +68,7 @@ class GradientDescent(StrategyInterface):
                 self.point = new_point
                 current_iteration += 1
 
-            self.algorithm_observer.point_observer.notify_all(self.function, self.point)
+            #self.algorithm_observer.point_observer.notify_all(Point.full_point(self.point, self.function))
 
             iteration_info = f"Итерация {current_iteration}: точка ({self.point[0]:5f}, {self.point[1]:.5f}, {self.function(*self.point):.5f})"
             self.algorithm_observer.iteration_observer.notify_all(iteration_info)

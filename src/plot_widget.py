@@ -11,10 +11,10 @@ class PlotWidget(GLViewWidget):
         self.set_background()
         self.set_camera()
 
-        self.grid = None
-        self.setup_grid()
+        self.grid = GLGridItem()
+        self.set_grid()
 
-        self.surface_plot = None
+        self.current_surface = None
         self.current_point = None
 
     def set_background(self):
@@ -23,44 +23,42 @@ class PlotWidget(GLViewWidget):
     def set_camera(self):
         self.setCameraPosition(distance=20, elevation=25, azimuth=45)
 
-    def setup_grid(self, *, size=30, spacing=1):
-        self.grid = GLGridItem()
+    def set_grid(self, *, size=30, spacing=1):
         self.grid.setSize(size, size)
         self.grid.setSpacing(spacing, spacing)
         self.grid.setColor(pyqtgraph.mkColor(255, 255, 255))
         self.addItem(self.grid)
 
-    def set_full_plot(self, function, point: Point):
-        self.set_surface(function=function, point=point)
-
-    def set_point(self, function, point: Point):
+    def set_point(self, point: Point):
         if self.current_point is not None:
             self.removeItem(self.current_point)
 
-        three_dimension_point = [point[0], point[1], function(*point)]
-        three_dimension_array = np.array([three_dimension_point])
-
-        point = GLScatterPlotItem(
-            pos=three_dimension_array,
+        point_plot = GLScatterPlotItem(
+            pos=point.get_point(),
             color=(0, 0.5, 0, 1),
             size=20,
             pxMode=True
         )
 
-        self.current_point = point
-        self.addItem(self.current_point)
+        self.current_point = point_plot
+        self.addItem(point_plot)
 
-    def set_surface(self, *, function, point: Point):
-        if self.surface_plot is not None:
-            self.removeItem(self.surface_plot)
+    def set_plot(self, function, point: Point=None):
+        if self.current_surface is not None:
+            self.removeItem(self.current_surface)
 
+        if point is not None:
+            self.current_surface = self.surface_in_point(function, point)
+            self.addItem(self.current_surface)
+            #self.set_point(point)
+
+    def surface_in_point(self, function, point: Point):
         x_grid_size, y_grid_size, z_grid_size = self.grid.size()
         x, y = point.create_points_array(x_length=x_grid_size, y_length=y_grid_size)
         X, Y = np.meshgrid(x, y)
-        Z = function(X, Y)
+        z = function(X, Y)
 
-        new_surface = GLSurfacePlotItem(x=x, y=y, z=Z)
-        new_surface.setColor(PyQt6.QtGui.QColor(255, 39, 39, 255))
+        surface = GLSurfacePlotItem(x=x, y=y, z=z)
+        surface.setColor(PyQt6.QtGui.QColor(255, 39, 39, 255))
 
-        self.surface_plot = new_surface
-        self.addItem(self.surface_plot)
+        return surface
