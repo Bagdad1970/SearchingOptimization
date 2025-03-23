@@ -1,5 +1,6 @@
 import src.math_functions as math_functions
 from src.entities.point import Point
+from src.function_from_str import function_from_str
 from src.model.strategy_interface import StrategyInterface
 from src.model.algorithm_observer import AlgorithmObserver
 
@@ -23,7 +24,7 @@ class GradientDescent(StrategyInterface):
         return '2*x1**2 + x1*x2 + x2**2'
 
     def set_params(self, function, **params):
-        self.function = function  # Целевая функция
+        self.function = function_from_str(function)  # Целевая функция
         self.point = params['point']
         self.eps = params['epsilon']
         self.eps1 = params['epsilon1']
@@ -68,7 +69,7 @@ class GradientDescent(StrategyInterface):
                 self.point = new_point
                 current_iteration += 1
 
-            #self.algorithm_observer.point_observer.notify_all(Point.full_point(self.point, self.function))
+            self.algorithm_observer.point_observer.notify_all(Point.full_point(self.point, self.function))
 
             iteration_info = f"Итерация {current_iteration}: точка ({self.point[0]:5f}, {self.point[1]:.5f}, {self.function(*self.point):.5f})"
             self.algorithm_observer.iteration_observer.notify_all(iteration_info)

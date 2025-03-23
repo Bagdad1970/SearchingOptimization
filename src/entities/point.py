@@ -24,7 +24,8 @@ class Point:
 
     @classmethod
     def full_point(cls, point, function):
-        return Point(point.get_point() + [function(*point)])
+        function_value = function(*point)
+        return Point([*point, function_value])
 
     def get_point(self):
         return self.point

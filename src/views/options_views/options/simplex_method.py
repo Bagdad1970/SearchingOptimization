@@ -1,6 +1,8 @@
 from PyQt6.QtWidgets import QWidget, QLineEdit
 from PyQt6 import uic
 
+from src.entities.point import Point
+
 
 class SimplexMethodOptions(QWidget):
     def __init__(self):
@@ -13,6 +15,9 @@ class SimplexMethodOptions(QWidget):
         self.delete_limitations_btn.setCheckable(True)
 
         self.delete_mode = False
+
+    def get_point(self):
+        return Point([0, 0])
 
     def add_limitation(self):
         new_limitation = QLineEdit(self)

@@ -11,11 +11,14 @@ class Model:
         self.strategy = strategy
         self.strategy.set_algorithm_observer(self.algorithm_observer)
 
-    def set_params(self, function, **params):
+    def set_params(self, function, params):
         self.strategy.set_params(function, **params)
 
     def execute(self):
         self.strategy.execute()
+
+    def initial_function(self):
+        return self.strategy.initial_function()
 
     def add_observer(self, key, observer):
         self.algorithm_observer.add_observer(key, observer)

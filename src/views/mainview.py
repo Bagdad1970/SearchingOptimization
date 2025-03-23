@@ -1,8 +1,6 @@
 from PyQt6.QtWidgets import QMainWindow
-
-from src.plot_widget import PlotWidget
 from src.views.view_interface import ViewInterface
-from PyQt6 import uic  # Используем uic для загрузки UI
+from PyQt6 import uic
 
 class MainView(QMainWindow):
     def __init__(self):
@@ -10,6 +8,8 @@ class MainView(QMainWindow):
         uic.loadUi('src/views/mainwindow.ui', self)  # Загружаем UI в QWidget
 
         self.presenter = None
+
+        self.ExecuteButton.clicked.connect(self.execute)
 
     def set_plot(self, plot):
         self.Plot.addWidget(plot)
@@ -25,6 +25,9 @@ class MainView(QMainWindow):
 
     def get_function(self):
         return self.Function.text()
+
+    def set_function(self, function: str):
+        self.Function.setText(function)
 
     def add_iteration_info(self,iteration_info: str):
         self.Iterations.appendPlainText(iteration_info)

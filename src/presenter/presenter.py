@@ -66,24 +66,22 @@ class Presenter:
     def get_point(self, point: Point):
         self.plot.set_point(point)
 
-    def set_params(self):
-        self.model.set_params(self.get_function(),
-                              self.options.get_params()
-                              )
-
     def get_function(self):
-        return function_from_str(self.view.get_function())
+        return self.view.get_function()
 
     def execute(self):
         self.view.clean_iterations()
 
-        self.set_params()
+        self.model.set_params(self.get_function(),
+                              self.options.get_params()
+                              )
 
         self.set_plot()
 
         self.model.execute()
 
     def set_plot(self):
-        self.plot.set_plot(function=self.get_function(),
+        function = function_from_str(self.get_function())
+        self.plot.set_plot(function=function,
                             point=self.options.get_point()
                            )

@@ -31,7 +31,11 @@ class PlotWidget(GLViewWidget):
 
     def set_point(self, point: Point):
         if self.current_point is not None:
-            self.removeItem(self.current_point)
+            if self.current_point in self.items:
+                self.removeItem(self.current_point)
+            self.current_point = None
+
+        print(point)
 
         point_plot = GLScatterPlotItem(
             pos=point.get_point(),
@@ -45,14 +49,16 @@ class PlotWidget(GLViewWidget):
 
     def set_plot(self, function, point: Point=None):
         if self.current_surface is not None:
-            self.removeItem(self.current_surface)
+            if self.current_surface in self.items:
+                self.removeItem(self.current_surface)
+            self.current_surface = None
 
         if point is not None:
             self.current_surface = self.surface_in_point(function, point)
             self.addItem(self.current_surface)
-            #self.set_point(point)
+            self.set_point(point)
 
-    def surface_in_point(self, function, point: Point):
+    def surface_in_point(self, function, point: Point) -> GLSurfacePlotItem:
         x_grid_size, y_grid_size, z_grid_size = self.grid.size()
         x, y = point.create_points_array(x_length=x_grid_size, y_length=y_grid_size)
         X, Y = np.meshgrid(x, y)

@@ -178,7 +178,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="function_label">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -193,11 +193,11 @@
       <widget class="QLineEdit" name="Function">
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>2*x**2 + x * y + y ** 2</string>
+        <string>2*x1**2 + 2*x1*x2 + 2*x2**2 - 4*x1 - 6*x2</string>
        </property>
       </widget>
      </item>
