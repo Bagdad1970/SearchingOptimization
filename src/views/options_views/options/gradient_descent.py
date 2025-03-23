@@ -13,7 +13,7 @@ class GradientDescentOptions(QWidget):
         point = Point([0, 0])
         for widget in self.findChildren(QWidget):
             widget_name = widget.objectName()
-            if widget_name == 'PointCoord1':
+            if widget_name == 'PointCoord1git':
                 point[0] = float(widget.text())
             elif widget_name == 'PointCoord2':
                 point[1] = float(widget.text())
@@ -33,10 +33,8 @@ class GradientDescentOptions(QWidget):
                 value = None
                 if isinstance(widget, QLineEdit):
                     value = float(widget.text()) if widget.text() else 0.0
-                elif isinstance(widget, QSpinBox):
+                elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
                     value = float(widget.value())
-                elif isinstance(widget, QDoubleSpinBox):
-                    value = widget.value()
 
                 method_params[widget_name] = value
 
