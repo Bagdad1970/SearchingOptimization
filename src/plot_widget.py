@@ -23,6 +23,13 @@ class PlotWidget(GLViewWidget):
     def set_camera(self):
         self.setCameraPosition(distance=20, elevation=25, azimuth=45)
 
+    def remove_points(self):
+        for widget in self.items:
+            if isinstance(widget, GLScatterPlotItem):
+                self.removeItem(widget)
+
+        self.current_point = None
+
     def set_grid(self, *, size=30, spacing=1):
         self.grid.setSize(size, size)
         self.grid.setSpacing(spacing, spacing)

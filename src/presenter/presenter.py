@@ -62,6 +62,8 @@ class Presenter:
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())
 
+        self.plot.remove_points()
+
         self.set_plot()
         self.add_observers(point_observer=self,
                            stop_reason_observer=self.view,
