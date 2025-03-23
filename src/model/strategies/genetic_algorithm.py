@@ -26,8 +26,8 @@ class GeneticAlgorithm(StrategyInterface):
         self.generations = params.get('generations', self.generations)
         self.population = None
 
-    @classmethod
-    def initial_function(cls) -> str:
+    @staticmethod
+    def initial_function() -> str:
         return '(1 - x)**2 + 100*(y-x**2)**2'
 
     def __create_population(self):

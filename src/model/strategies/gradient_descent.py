@@ -4,6 +4,7 @@ from src.function_from_str import function_from_str
 from src.model.strategy_interface import StrategyInterface
 from src.model.algorithm_observer import AlgorithmObserver
 
+
 class GradientDescent(StrategyInterface):
     def __init__(self):
         super().__init__()
@@ -19,18 +20,18 @@ class GradientDescent(StrategyInterface):
     def set_algorithm_observer(self, algorithm_observer: AlgorithmObserver):
         self.algorithm_observer = algorithm_observer
 
-    @classmethod
-    def initial_function(cls):
+    @staticmethod
+    def initial_function():
         return '2*x1**2 + x1*x2 + x2**2'
 
     def set_params(self, function, **params):
-        self.function = function_from_str(function)  # Целевая функция
-        self.point = params['point']
-        self.eps = params['epsilon']
-        self.eps1 = params['epsilon1']
-        self.eps2 = params['epsilon2']
-        self.step = params['step']
-        self.max_iteration = params['max_iteration']
+        self.function = function_from_str(function)
+        self.point = params.get('point', self.point)
+        self.eps = params.get('epsilon', self.eps)
+        self.eps1 = params.get('epsilon1', self.eps1)
+        self.eps2 = params.get('epsilon2', self.eps2)
+        self.step = params.get('step', self.step)
+        self.max_iteration = params.get('max_iteration', self.max_iteration)
 
     @staticmethod
     def next_point(point: Point, gradient: Point, step: float):

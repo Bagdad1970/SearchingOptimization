@@ -20,8 +20,8 @@ class SimplexMethod(StrategyInterface):
         self.fitness_function = function
         self.limitations = params['limitations']
 
-    @classmethod
-    def initial_function(cls):
+    @staticmethod
+    def initial_function():
         return '2*x1**2 + 2*x1*x2 + 2*x2**2 - 4*x1 - 6*x2'
 
     def execute(self):

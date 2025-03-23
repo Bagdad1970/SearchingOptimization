@@ -8,6 +8,6 @@ class StrategyInterface:
     def set_algorithm_observer(self, algorithm_observer):
         raise NotImplementedError
 
-    @classmethod
-    def initial_function(cls) -> str:
+    @staticmethod
+    def initial_function() -> str:
         raise NotImplementedError
