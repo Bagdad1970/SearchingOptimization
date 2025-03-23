@@ -140,6 +140,11 @@
       <string>Симплекс метод</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Генетический алгоритм</string>
+     </property>
+    </item>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
@@ -159,9 +164,9 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>1060</x>
+      <x>1040</x>
       <y>10</y>
-      <width>251</width>
+      <width>271</width>
       <height>701</height>
      </rect>
     </property>
