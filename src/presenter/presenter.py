@@ -1,10 +1,12 @@
 from src.entities.point import Point
 from src.model.model import Model
+from src.model.strategies.genetic_algorithm import GeneticAlgorithm
 from src.model.strategies.gradient_descent import GradientDescent
 from src.model.strategies.simplex_method import SimplexMethod
 from src.plot_widget import PlotWidget
 from src.views.mainview import MainView
 from src.function_from_str import function_from_str
+from src.views.options_views.options.genetic_algorithm import GeneticAlgorithmOptions
 from src.views.options_views.options.gradient_descent import GradientDescentOptions
 from src.views.options_views.options.simplex_method import SimplexMethodOptions
 
@@ -53,6 +55,9 @@ class Presenter:
         elif current_text == "Симплекс метод":
             self.model.set_strategy(SimplexMethod())
             self.options = SimplexMethodOptions()
+        elif current_text == "Генетический алгоритм":
+            self.model.set_strategy(GeneticAlgorithm())
+            self.options = GeneticAlgorithmOptions()
 
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())
