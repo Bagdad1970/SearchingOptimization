@@ -6,3 +6,4 @@ class StopReasonObserver(Observer):
 
     def notify_all(self, stop_reason: str):
         [observer.add_stop_reason(stop_reason) for observer in self.observers]
+        self.update_events()

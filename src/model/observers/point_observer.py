@@ -7,3 +7,4 @@ class PointObserver(Observer):
 
     def notify_all(self, point: Point):
         [observer.get_point(point) for observer in self.observers]
+        self.update_events()
