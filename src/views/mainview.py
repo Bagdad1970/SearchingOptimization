@@ -29,7 +29,7 @@ class MainView(QMainWindow):
     def set_function(self, function: str):
         self.Function.setText(function)
 
-    def add_iteration_info(self,iteration_info: str):
+    def add_iteration_info(self, iteration_info: str):
         self.Iterations.appendPlainText(iteration_info)
 
     def add_stop_reason(self, stop_reason: str):

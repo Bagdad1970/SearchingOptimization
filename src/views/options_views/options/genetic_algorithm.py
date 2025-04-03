@@ -11,7 +11,7 @@ class GeneticAlgorithmOptions(QWidget):
     def get_point(self):
         return None
 
-    def get_params(self):
+    def get_params(self) -> dict:
         params = {}
 
         for widget in self.findChildren(QWidget):
@@ -19,8 +19,6 @@ class GeneticAlgorithmOptions(QWidget):
                 widget_name = widget.objectName()
                 if not widget_name:
                     continue
-
                 params[widget_name] = float(widget.value())
 
-        print(params)
         return params

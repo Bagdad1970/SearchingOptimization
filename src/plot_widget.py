@@ -61,11 +61,11 @@ class PlotWidget(GLViewWidget):
         if point is not None:
             self.current_surface = self.surface_in_point(function, point)
             self.addItem(self.current_surface)
-            #self.set_point(point)
+            self.set_point(point)
 
     def surface_in_point(self, function, point: Point) -> GLSurfacePlotItem:
         x_grid_size, y_grid_size, z_grid_size = self.grid.size()
-        x, y = point.create_points_array(x_length=x_grid_size, y_length=y_grid_size)
+        x, y = Point([0, 0]).create_points_array(x_length=x_grid_size, y_length=y_grid_size)
         X, Y = np.meshgrid(x, y)
         z = function(X, Y)
 
