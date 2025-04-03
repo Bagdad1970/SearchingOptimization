@@ -32,7 +32,6 @@ class Presenter:
         self.view.SpecificMethod.currentTextChanged.connect(self.change_method)
 
     def set_option_widget(self):
-        # Очищаем layout (удаляем все виджеты)
         while self.view.Options.layout().count():
             item = self.view.Options.layout().takeAt(0)
             if item.widget():
@@ -48,6 +47,8 @@ class Presenter:
 
     def change_method(self):
         self.model.remove_observers()
+        self.view.clean_iterations()
+
         current_text = self.view.SpecificMethod.currentText()
         if current_text == "Градиентный спуск":
             self.model.set_strategy(GradientDescent())
