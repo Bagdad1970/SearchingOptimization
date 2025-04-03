@@ -1,5 +1,5 @@
 from src.entities.point import Point
-from src.model.strategy_interface import StrategyInterface
+from src.model.strategies.strategy_interface import StrategyInterface
 import sys
 sys.path.append("/home/bagdad/study/searchingOptimization/quadratic_simplex")
 
@@ -22,7 +22,7 @@ class SimplexMethod(StrategyInterface):
 
     @staticmethod
     def initial_function():
-        return '2*x1**2 + 2*x1*x2 + 2*x2**2 - 4*x1 - 6*x2'
+            return '2*x1**2 + 2*x1*x2 + 2*x2**2 - 4*x1 - 6*x2'
 
     def execute(self):
         limitations = [ Limitation(limitation_str) for limitation_str in self.limitations ]
@@ -31,6 +31,7 @@ class SimplexMethod(StrategyInterface):
                                                      ) )
 
         self.algorithm_observer.point_observer.notify_all(Point.full_point(point, function_from_str(self.fitness_function)))
+        print(Point.full_point(point, function_from_str(self.fitness_function)))
 
 
         func = function_from_str(self.fitness_function)

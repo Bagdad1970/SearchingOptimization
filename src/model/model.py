@@ -1,5 +1,5 @@
 from src.model.algorithm_observer import AlgorithmObserver
-from src.model.strategy_interface import StrategyInterface
+from src.model.strategies.strategy_interface import StrategyInterface
 
 
 class Model:
@@ -20,7 +20,7 @@ class Model:
     def initial_function(self):
         return self.strategy.initial_function()
 
-    def add_observer(self, key, observer):
+    def add_observer(self, key: str, observer):
         self.algorithm_observer.add_observer(key, observer)
 
     def remove_observers(self):
