@@ -1,4 +1,4 @@
-from src.model.algorithm_observer import AlgorithmObserver
+from src.model.observers.algorithm_observer import AlgorithmObserver
 from src.model.strategies.strategy_interface import StrategyInterface
 
 
