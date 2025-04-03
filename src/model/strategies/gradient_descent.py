@@ -1,10 +1,8 @@
-from time import sleep
-
 import src.math_functions as math_functions
 from src.entities.point import Point
 from src.function_from_str import function_from_str
 from src.model.strategies.strategy_interface import StrategyInterface
-from src.model.algorithm_observer import AlgorithmObserver
+from src.model.observers.algorithm_observer import AlgorithmObserver
 
 
 class GradientDescent(StrategyInterface):

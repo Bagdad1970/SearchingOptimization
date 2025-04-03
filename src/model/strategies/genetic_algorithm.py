@@ -1,6 +1,7 @@
 import numpy as np
 
-from src.model.strategy_interface import StrategyInterface
+from src.model.strategies.strategy_interface import StrategyInterface
+from src.function_from_str import function_from_str
 
 
 class GeneticAlgorithm(StrategyInterface):
@@ -17,13 +18,13 @@ class GeneticAlgorithm(StrategyInterface):
     def set_algorithm_observer(self, algorithm_observer):
         self.algorithm_observer = algorithm_observer
 
-    def set_params(self, function, **params):
-        self.fitness_function = function
-        self.population_size = params.get('population_size', self.population_size)
-        self.genes = params.get('genes', self.genes)
+    def set_params(self, function: str, **params):
+        self.fitness_function = function_from_str(function)
+        self.population_size = int(params.get('population_size', self.population_size))
+        self.genes = int(params.get('genes', self.genes))
         self.mutation_rate = params.get('mutation_rate', self.mutation_rate)
-        self.elite_size = params.get('elite_size', self.elite_size)
-        self.generations = params.get('generations', self.generations)
+        self.elite_size = int(params.get('elite_size', self.elite_size))
+        self.generations = int(params.get('generations', self.generations))
         self.population = None
 
     @staticmethod
@@ -56,7 +57,7 @@ class GeneticAlgorithm(StrategyInterface):
         self.population = self.__create_population()
 
         for generation in range(self.generations):
-            scores = np.array([self.fitness_function(ind) for ind in self.population])
+            scores = np.array([self.fitness_function(*ind) for ind in self.population])
             elite_indices = scores.argsort()[-self.elite_size:]
             new_population = self.population[elite_indices].tolist()
 
@@ -69,10 +70,12 @@ class GeneticAlgorithm(StrategyInterface):
                     new_population.append(self.__adaptive_mutation(child2, generation))
 
             self.population = np.array(new_population)
-            print(f"Поколение {generation}: Минимум = {-max(scores)}")
 
-        best_index = np.argmax([self.fitness_function(ind) for ind in self.population])
-        return self.population[best_index]
+            iteration_info = f"Поколение {generation}: Минимум = {-max(scores):.6f}"
+            self.algorithm_observer.iteration_observer.notify_all(iteration_info)
+
+        best_index = np.argmax([self.fitness_function(*ind) for ind in self.population])
+        self.algorithm_observer.iteration_observer.notify_all(f"Результат: {self.population[best_index]}")
 
 
 def rosenbrock(x):
