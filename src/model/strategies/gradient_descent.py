@@ -1,8 +1,31 @@
-import src.math_functions as math_functions
 from src.entities.point import Point
 from src.function_from_str import function_from_str
 from src.model.strategies.strategy_interface import StrategyInterface
 from src.model.observers.algorithm_observer import AlgorithmObserver
+
+
+def compute_gradient(*, function, point: Point, h=1e-6):
+    """
+    Вычисляет градиент функции f в точке x методом конечных разностей.
+
+    :param function: Функция, градиент которой нужно вычислить градиент
+    :param point: Координаты точки
+    :param x: Точка, в которой вычисляется градиент (список или массив)
+    :param h: Шаг для метода конечных разностей
+    :return: Градиент функции в точке x (список)
+    """
+    gradient = Point()
+    for point_coord in range(len(point)):
+        x_plus_h = point.copy()
+        x_minus_h = point.copy()
+
+        x_plus_h[point_coord] += h
+        x_minus_h[point_coord] -= h
+
+        partial_derivative = ( function(*x_plus_h) - function(*x_minus_h) ) / (2 * h)
+        gradient.append(partial_derivative)
+
+    return gradient
 
 
 class GradientDescent(StrategyInterface):
@@ -41,7 +64,7 @@ class GradientDescent(StrategyInterface):
         current_iteration = 0
 
         while True:
-            gradient = math_functions.gradient(function=self.function, point=self.point)
+            gradient = compute_gradient(function=self.function, point=self.point)
 
             gradient_norm = gradient.equalid_norm()
             if gradient_norm < self.eps1:
