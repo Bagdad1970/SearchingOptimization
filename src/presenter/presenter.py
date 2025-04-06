@@ -19,6 +19,7 @@ class Presenter:
         self.view.set_presenter(self)
 
         self.plot = PlotWidget()
+        self.plot.set_grid(sizes=self.view.get_area_lengths())
         self.view.set_plot(self.plot)
 
         self.iterations = self.view.Iterations
@@ -37,7 +38,6 @@ class Presenter:
             if item.widget():
                 item.widget().deleteLater()
 
-        # Добавляем новый виджет
         self.view.Options.layout().addWidget(self.options)
 
     def add_observers(self, **observers):
@@ -64,12 +64,13 @@ class Presenter:
         self.view.set_function(self.model.initial_function())
 
         self.plot.remove_points()
-
         self.set_plot()
-        self.add_observers(point_observer=self,
-                           stop_reason_observer=self.view,
-                           iteration_observer=self.view
-                        )
+
+        self.add_observers(
+            point_observer=self,
+            stop_reason_observer=self.view,
+            iteration_observer=self.view
+        )
 
     def get_point(self, point: Point):
         self.plot.set_point(point)
@@ -80,16 +81,17 @@ class Presenter:
     def execute(self):
         self.view.clean_iterations()
 
-        self.model.set_params(self.get_function(),
-                              self.options.get_params()
-                              )
+        self.model.set_params(
+            self.get_function(),
+            self.options.get_params()
+        )
 
         self.set_plot()
-
         self.model.execute()
 
     def set_plot(self):
         function = function_from_str(self.get_function())
-        self.plot.set_plot(function=function,
-                            point=self.options.get_point()
-                           )
+        self.plot.set_plot(
+            function=function,
+            point=self.options.get_point()
+        )
