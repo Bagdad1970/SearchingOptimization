@@ -31,8 +31,6 @@ class SimplexMethod(StrategyInterface):
                                                      ) )
 
         self.algorithm_observer.point_observer.notify_all(Point.full_point(point, function_from_str(self.fitness_function)))
-        print(Point.full_point(point, function_from_str(self.fitness_function)))
-
 
         func = function_from_str(self.fitness_function)
         result_info = f"Результат: точка ({point[0]:5f}, {point[1]:.5f}, {func(*point):.5f})"

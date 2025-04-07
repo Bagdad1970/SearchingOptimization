@@ -15,9 +15,9 @@ def compute_gradient(*, function, point: Point, h=1e-6):
     :return: Градиент функции в точке x (список)
     """
     gradient = Point()
-    for point_coord in range(len(point)):
-        x_plus_h = point.copy()
-        x_minus_h = point.copy()
+    for point_coord in range(len(point[0:2])):
+        x_plus_h = point.copy()[0:2]
+        x_minus_h = point[:2].copy()[0:2]
 
         x_plus_h[point_coord] += h
         x_minus_h[point_coord] -= h
@@ -49,7 +49,7 @@ class GradientDescent(StrategyInterface):
 
     def set_params(self, function, **params):
         self.function = function_from_str(function)
-        self.point = params.get('point', self.point)
+        self.point = params.get('point', self.point)[:2]
         self.eps = params.get('epsilon', self.eps)
         self.eps1 = params.get('epsilon1', self.eps1)
         self.eps2 = params.get('epsilon2', self.eps2)
@@ -62,7 +62,6 @@ class GradientDescent(StrategyInterface):
 
     def execute(self):
         current_iteration = 0
-
         while True:
             gradient = compute_gradient(function=self.function, point=self.point)
 
@@ -93,12 +92,10 @@ class GradientDescent(StrategyInterface):
                 self.point = new_point
                 current_iteration += 1
 
-            self.algorithm_observer.point_observer.notify_all(Point.full_point(self.point, self.function))
-
             iteration_info = f"Итерация {current_iteration}: точка ({self.point[0]:5f}, {self.point[1]:.5f}, {self.function(*self.point):.5f})"
             self.algorithm_observer.iteration_observer.notify_all(iteration_info)
 
         result = f"Результат: точка ({self.point[0]:5f}, {self.point[1]:.5f}, {self.function(*self.point):.5f})"
+        self.algorithm_observer.point_observer.notify_all(Point.full_point(self.point, self.function))
         self.algorithm_observer.iteration_observer.notify_all(result)
-
         self.algorithm_observer.stop_reason_observer.notify_all(stop_reason)

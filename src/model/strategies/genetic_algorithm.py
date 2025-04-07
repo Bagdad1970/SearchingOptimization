@@ -46,7 +46,7 @@ class GeneticAlgorithm(StrategyInterface):
 
     def fitness(self, individual: Point) -> float:
         """Функция приспособленности (чем меньше target_function, тем лучше)"""
-        x, y = individual.point
+        x, y = individual.get_point()
         return 1.0 / (1.0 + self.target_function(x, y))  # Преобразуем в (0,1]
 
     def rank_selection(
@@ -101,7 +101,6 @@ class GeneticAlgorithm(StrategyInterface):
                 best_fitness = current_best
                 best_individual = population[current_best_idx].copy()
 
-            self.algorithm_observer.point_observer.notify_all(best_individual)
             self.algorithm_observer.iteration_observer.notify_all(
                 f"Поколение: {generation}: точка ({best_individual[0]:5f}, {best_individual[1]:.5f}, {self.target_function(*best_individual):.5f})"
             )
@@ -128,6 +127,7 @@ class GeneticAlgorithm(StrategyInterface):
                 for _ in range(self.population_size - len(population))
             ]
 
+        self.algorithm_observer.point_observer.notify_all(Point.full_point(best_individual, self.target_function))
         self.algorithm_observer.iteration_observer.notify_all(
             f"Результат: точка ({best_individual[0]:5f}, {best_individual[1]:.5f}, {self.target_function(*best_individual):.5f})"
         )
