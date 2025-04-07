@@ -30,6 +30,8 @@ class GeneticAlgorithm(StrategyInterface):
         self.elite_count = int(params.get("elite_count", self.elite_count))
         self.x_range = params.get("x_range", self.x_range)
         self.y_range = params.get("y_range", self.y_range)
+        print(self.x_range)
+        print(self.y_range)
 
     def set_algorithm_observer(self, algorithm_observer: AlgorithmObserver):
         self.algorithm_observer = algorithm_observer
@@ -55,9 +57,9 @@ class GeneticAlgorithm(StrategyInterface):
         """Ранговый отбор"""
         sorted_indices = np.argsort(fitness_values)  # Сортировка от худшего к лучшему
         ranks = np.arange(1, len(population) + 1) ** self.selection_pressure
-        prob = ranks / np.sum(ranks)
+        probability = ranks / np.sum(ranks)
         selected_indices = np.random.choice(
-            sorted_indices, size=num_parents, p=prob[::-1]  # Лучшие особи в конце
+            sorted_indices, size=num_parents, p=probability[::-1]  # Лучшие особи в конце
         )
         return [population[i] for i in selected_indices]
 
@@ -73,13 +75,14 @@ class GeneticAlgorithm(StrategyInterface):
         """Равномерная мутация с использованием методов Point"""
         mutated = individual.copy()
         for i in range(len(mutated)):
-            if np.random.rand() < self.mutation_prob:
+            if np.random.rand() < self.mutation_prob:  # проверяется вероятность мутации
                 mutated[i] += np.random.uniform(
                     -self.mutation_range, self.mutation_range
                 )
+                # ограничиваем значение гена диапазоном x_range (y_range)
                 if i == 0:
                     mutated[i] = np.clip(mutated[i], *self.x_range)
-                else:
+                elif i == 1:
                     mutated[i] = np.clip(mutated[i], *self.y_range)
         return mutated
 
