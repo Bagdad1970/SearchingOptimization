@@ -1,75 +1,90 @@
 import numpy as np
-import PyQt6.QtGui
-import pyqtgraph
-from pyqtgraph.opengl import GLViewWidget, GLSurfacePlotItem, GLScatterPlotItem, GLGridItem
-
+from PyQt6.QtWidgets import QVBoxLayout, QWidget
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 from src.entities.point import Point
 
-class PlotWidget(GLViewWidget):
-    def __init__(self):
-        super().__init__()
-        self.set_background()
-        self.set_camera()
 
-        self.grid = GLGridItem()
-        self.set_grid()
+class Matplotlib3DWidget(FigureCanvas):
+    def __init__(self, parent=None):
+        self.fig = Figure(figsize=(8, 6))
+        super().__init__(self.fig)
+        self.setParent(parent)
 
+        self.ax = self.fig.add_subplot(111, projection='3d')
         self.current_surface = None
         self.current_point = None
+        self.set_camera()
 
-    def set_background(self):
-        self.setBackgroundColor(pyqtgraph.mkColor(0, 0, 0))
+    def set_camera(self, elev=30, azim=45):
+        self.ax.view_init(elev=elev, azim=azim)
+        self.ax.dist = 1
 
-    def set_camera(self):
-        self.setCameraPosition(distance=20, elevation=25, azimuth=45)
+    def clear_plot(self):
+        self.ax.clear()
+        self.current_surface = None
+        self.current_point = None
+        self.set_camera()
 
     def remove_points(self):
-        for widget in self.items:
-            if isinstance(widget, GLScatterPlotItem):
-                self.removeItem(widget)
-
-        self.current_point = None
-
-    def set_grid(self, *, size=30, spacing=1):
-        self.grid.setSize(size, size)
-        self.grid.setSpacing(spacing, spacing)
-        self.grid.setColor(pyqtgraph.mkColor(255, 255, 255))
-        self.addItem(self.grid)
+        if self.current_point is not None:
+            self.current_point.remove()
+            self.current_point = None
+        self.draw()
 
     def set_point(self, point: Point):
         if self.current_point is not None:
-            if self.current_point in self.items:
-                self.removeItem(self.current_point)
-            self.current_point = None
+            self.current_point.remove()
 
-        point_plot = GLScatterPlotItem(
-            pos=np.array([point]),
-            color=(0, 0.5, 0, 1),
-            size=20,
-            pxMode=True
+        self.current_point = self.ax.scatter(
+            [point[0]], [point[1]], [point[2]],
+            color='green', s=100
         )
+        self.draw()
 
-        self.current_point = point_plot
-        self.addItem(self.current_point)
-
-    def set_plot(self, function, point: Point=None):
+    def set_plot(self, *, function, area: dict, point: Point = None):
         if self.current_surface is not None:
-            if self.current_surface in self.items:
-                self.removeItem(self.current_surface)
-            self.current_surface = None
+            self.current_surface.remove()
 
         if point is not None:
-            self.current_surface = self.surface_in_point(function, point)
-            self.addItem(self.current_surface)
+            self.current_surface = self.surface_in_point(function=function, point=point, area=area)
             self.set_point(point)
 
-    def surface_in_point(self, function, point: Point) -> GLSurfacePlotItem:
-        x_grid_size, y_grid_size, z_grid_size = self.grid.size()
-        x, y = Point([0, 0]).create_points_array(x_length=x_grid_size, y_length=y_grid_size)
+        self.draw()
+
+    def surface_in_point(self, *, function, point: Point, area: dict):
+        x = np.linspace(int(point[0] - area.get('x')[0]), int(point[0] + area.get('x')[1]), 50)
+        y = np.linspace(int(point[1] - area.get('y')[0]), int(point[1] + area.get('y')[1]), 50)
         X, Y = np.meshgrid(x, y)
-        z = function(X, Y)
+        Z = function(X, Y)
 
-        surface = GLSurfacePlotItem(x=x, y=y, z=z)
-        surface.setColor(PyQt6.QtGui.QColor(255, 39, 39, 255))
-
+        surface = self.ax.plot_surface(
+            X, Y, Z,
+            cmap='viridis',
+            alpha=0.8,
+            label='Surface'
+        )
         return surface
+
+
+class PlotWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.layout = QVBoxLayout(self)
+        self.plot = Matplotlib3DWidget(self)
+        self.layout.addWidget(self.plot)
+
+    def set_point(self, point: Point):
+        self.plot.set_point(point)
+
+    def set_plot(self, function, area: dict, point: Point = None):
+        self.plot.set_plot(function=function, area=area, point=point)
+
+    #def return_to_start_position(self):
+    #    self.plot.set_camera()
+
+    def remove_points(self):
+        self.plot.remove_points()
+
+    def clear_plot(self):
+        self.plot.clear_plot()

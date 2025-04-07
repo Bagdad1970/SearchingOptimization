@@ -9,6 +9,7 @@ class MainView(QMainWindow):
 
         self.presenter = None
 
+
         self.ExecuteButton.clicked.connect(self.execute)
 
     def set_plot(self, plot) -> None:
@@ -35,19 +36,17 @@ class MainView(QMainWindow):
     def add_stop_reason(self, stop_reason: str) -> None:
         self.Iterations.appendPlainText(stop_reason)
 
-    def get_x_area_length(self) -> float:
-        if self.x_area_length.text() == "":
-            return 10.0
-        else:
-            return float(self.x_area_length.text())
-
-    def get_y_area_length(self) -> float:
-        if self.y_area_length.text() == "":
-            return 10.0
-        else:
-            return float(self.y_area_length.text())
-
-    def get_area_lengths(self) -> tuple:
-        return (self.get_x_area_length(),
-                self.get_y_area_length()
+    def get_x_limitation(self) -> tuple:
+        return (abs(float(self.left_x.text())),
+                abs(float(self.right_x.text()))
                 )
+
+    def get_y_limitation(self) -> tuple:
+        return (abs(float(self.left_y.text())),
+                abs(float(self.right_y.text()))
+                )
+
+    def get_area_lengths(self) -> dict:
+        return {'x': self.get_y_limitation(),
+                'y': self.get_y_limitation()
+                }

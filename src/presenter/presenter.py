@@ -19,7 +19,6 @@ class Presenter:
         self.view.set_presenter(self)
 
         self.plot = PlotWidget()
-        self.plot.set_grid(sizes=self.view.get_area_lengths())
         self.view.set_plot(self.plot)
 
         self.iterations = self.view.Iterations
@@ -63,7 +62,7 @@ class Presenter:
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())
 
-        self.plot.remove_points()
+        #self.plot.remove_points()
         self.set_plot()
 
         self.add_observers(
@@ -93,5 +92,6 @@ class Presenter:
         function = function_from_str(self.get_function())
         self.plot.set_plot(
             function=function,
+            area=self.view.get_area_lengths(),
             point=self.options.get_point()
         )

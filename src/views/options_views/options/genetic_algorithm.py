@@ -9,7 +9,7 @@ class GeneticAlgorithmOptions(QWidget):
         uic.loadUi('src/views/options_views/ui/genetic_algorithm.ui', self)
 
     def get_point(self):
-        return Point([0, 0])
+        return Point([0, 0, 0])
 
     def get_params(self) -> dict:
         params = {}

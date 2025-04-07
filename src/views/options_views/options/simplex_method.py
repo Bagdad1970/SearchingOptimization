@@ -17,7 +17,7 @@ class SimplexMethodOptions(QWidget):
         self.delete_mode = False
 
     def get_point(self):
-        return Point([0, 0])
+        return Point([0, 0, 0])
 
     def add_limitation(self):
         new_limitation = QLineEdit(self)

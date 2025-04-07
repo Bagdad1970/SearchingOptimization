@@ -152,7 +152,7 @@
       <x>320</x>
       <y>10</y>
       <width>711</width>
-      <height>701</height>
+      <height>651</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="Plot">
@@ -208,36 +208,51 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>1040</x>
       <y>620</y>
-      <width>271</width>
-      <height>91</height>
+      <width>181</width>
+      <height>72</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLineEdit" name="left_x">
          <property name="font">
           <font>
            <pointsize>11</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Длина OX:</string>
+          <string>-512</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="x_area_length">
+        <widget class="QLabel" name="label">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="text">
+          <string>&lt;= x &lt;=</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="right_x">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>512</string>
          </property>
         </widget>
        </item>
@@ -246,23 +261,38 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLineEdit" name="left_y">
          <property name="font">
           <font>
            <pointsize>11</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Длина OY:</string>
+          <string>-512</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="y_area_length">
+        <widget class="QLabel" name="label_2">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="text">
+          <string>&lt;= y &lt;=</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="right_y">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>512</string>
          </property>
         </widget>
        </item>
