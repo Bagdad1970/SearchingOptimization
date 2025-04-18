@@ -1,14 +1,10 @@
 from src.entities.point import Point
 from src.model.model import Model
-from src.model.strategies.genetic_algorithm import GeneticAlgorithm
-from src.model.strategies.gradient_descent import GradientDescent
-from src.model.strategies.simplex_method import SimplexMethod
+from src.model.strategies import *
 from src.plot_widget import PlotWidget
 from src.views.mainview import MainView
 from src.function_from_str import function_from_str
-from src.views.options_views.options.genetic_algorithm import GeneticAlgorithmOptions
-from src.views.options_views.options.gradient_descent import GradientDescentOptions
-from src.views.options_views.options.simplex_method import SimplexMethodOptions
+from src.views.options_views.options import *
 
 
 class Presenter:
@@ -58,6 +54,9 @@ class Presenter:
         elif current_text == "Генетический алгоритм":
             self.model.set_strategy(GeneticAlgorithm())
             self.options = GeneticAlgorithmOptions()
+        elif current_text == "Рой частиц":
+            self.model.set_strategy(ParticleSwarm())
+            self.options = ParticleSwarmOptions()
 
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())
@@ -85,7 +84,7 @@ class Presenter:
             self.options.get_params()
         )
 
-        self.set_plot()
+        #self.set_plot()
         self.model.execute()
 
     def set_plot(self):
