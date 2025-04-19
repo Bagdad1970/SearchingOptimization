@@ -61,7 +61,7 @@ class Presenter:
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())
 
-        #self.plot.remove_points()
+        self.plot.remove_points()
         self.set_plot()
 
         self.add_observers(
@@ -84,7 +84,7 @@ class Presenter:
             self.options.get_params()
         )
 
-        #self.set_plot()
+        self.set_plot()
         self.model.execute()
 
     def set_plot(self):
@@ -92,5 +92,5 @@ class Presenter:
         self.plot.set_plot(
             function=function,
             area=self.view.get_area_lengths(),
-            point=self.options.get_point()
+            point=self.options.get_point(function)
         )

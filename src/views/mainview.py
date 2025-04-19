@@ -9,7 +9,6 @@ class MainView(QMainWindow):
 
         self.presenter = None
 
-
         self.ExecuteButton.clicked.connect(self.execute)
 
     def set_plot(self, plot) -> None:

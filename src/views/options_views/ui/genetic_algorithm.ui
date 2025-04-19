@@ -725,6 +725,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="x_range">
+       <property name="text">
+        <string>(-5.0, 5.0)</string>
+       </property>
        <property name="placeholderText">
         <string>(5.0, 5.0)</string>
        </property>
@@ -748,6 +751,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="y_range">
+       <property name="text">
+        <string>(-5.0, 5.0)</string>
+       </property>
        <property name="placeholderText">
         <string>(5.0, 5.0)</string>
        </property>

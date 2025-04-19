@@ -746,6 +746,9 @@
          <pointsize>11</pointsize>
         </font>
        </property>
+       <property name="text">
+        <string>(1.0, 1.0)</string>
+       </property>
        <property name="placeholderText">
         <string>(1.0, 1.0)</string>
        </property>

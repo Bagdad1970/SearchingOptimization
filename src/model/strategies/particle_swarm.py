@@ -150,9 +150,9 @@ class ParticleSwarm(StrategyInterface):
                     self.global_best_position = particle.best_position.copy()
 
             self.algorithm_observer.iteration_observer.notify_all(
-                f"Итерация {i}: f({self.global_best_position[0]:.5f}, {self.global_best_position[1]:.5f}) = {self.function(*self.global_best_position):.5f}"
+                f"Итерация {i}: F({self.global_best_position[0]:.5f}, {self.global_best_position[1]:.5f}) = {self.function(*self.global_best_position):.5f}"
             )
 
         self.algorithm_observer.iteration_observer.notify_all(
-            f"Результат: точка ({self.global_best_position[0]:.5f}, {self.global_best_position[1]:.5f}), значение функции: {self.function(*self.global_best_position):.5f}"
+            f"Результат: точка ({self.global_best_position[0]:.5f}, {self.global_best_position[1]:.5f}, {self.function(*self.global_best_position):.5f})"
         )

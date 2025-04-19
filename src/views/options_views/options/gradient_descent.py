@@ -8,14 +8,17 @@ class GradientDescentOptions(QWidget):
         super().__init__()
         uic.loadUi('src/views/options_views/ui/gradient_descent.ui', self)
 
-    def get_point(self) -> Point:
-        point = Point([0, 0, 0])
+    def get_point(self, function) -> Point:
+        point = Point([0, 0])
         for widget in self.findChildren(QWidget):
             widget_name = widget.objectName()
             if widget_name == 'PointCoord1':
                 point[0] = float(widget.text())
             elif widget_name == 'PointCoord2':
                 point[1] = float(widget.text())
+
+        function_value = function(*point)
+        point.append(function_value)
 
         return point
 

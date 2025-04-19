@@ -8,8 +8,10 @@ class GeneticAlgorithmOptions(QWidget):
         super().__init__()
         uic.loadUi('src/views/options_views/ui/genetic_algorithm.ui', self)
 
-    def get_point(self):
-        return Point([0, 0, 0])
+    def get_point(self, function):
+        point = Point([0, 0])
+        point.append(function(*point))
+        return point
 
     def get_ranges(self) -> dict:
         params = {}
@@ -19,13 +21,8 @@ class GeneticAlgorithmOptions(QWidget):
                 if not widget_name:
                     continue
 
-                params[widget_name] = tuple(map(float,
-                                                widget.text()
-                                                .replace(')', '')
-                                                .replace('(', '')
-                                                .split(',')
-                                                )
-                                            )
+                if widget.text() != '':
+                    params[widget_name] = tuple(map(float, widget.text().replace(' ', '').replace(')', '').replace('(', '').split(',')))
 
         return params
 

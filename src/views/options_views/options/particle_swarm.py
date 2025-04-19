@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 from PyQt6.QtWidgets import QWidget, QSpinBox, QDoubleSpinBox, QLineEdit
 from PyQt6 import uic
 from src.entities.point import Point
@@ -12,15 +14,20 @@ class ParticleSwarmOptions(QWidget):
         super().__init__()
         uic.loadUi('src/views/options_views/ui/particle_swarm.ui', self)
 
-    def get_point(self):
+    def get_point(self, function: Callable):
+        point = Point([0, 0, 0])
         for widget in self.findChildren(QWidget):
             if isinstance(widget, (QDoubleSpinBox, QSpinBox)):
                 widget_name = widget.objectName()
 
                 if widget_name == 'initial_point':
                     cleared_point = split_tuple_param(widget.text())
-                    point = map(float, cleared_point)
-                    return Point(point)
+                    point = Point(map(float, cleared_point))
+                    function_value = function(*point)
+                    point.append(function_value)
+
+        return point
+
 
     def get_ranges(self) -> dict:
         params = {}

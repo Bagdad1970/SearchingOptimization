@@ -145,6 +145,11 @@
       <string>Генетический алгоритм</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Рой частиц</string>
+     </property>
+    </item>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
@@ -228,7 +233,7 @@
           </font>
          </property>
          <property name="text">
-          <string>-512</string>
+          <string>-5.12</string>
          </property>
         </widget>
        </item>
@@ -252,7 +257,7 @@
           </font>
          </property>
          <property name="text">
-          <string>512</string>
+          <string>5.12</string>
          </property>
         </widget>
        </item>
@@ -268,7 +273,7 @@
           </font>
          </property>
          <property name="text">
-          <string>-512</string>
+          <string>-5.12</string>
          </property>
         </widget>
        </item>
@@ -292,7 +297,7 @@
           </font>
          </property>
          <property name="text">
-          <string>512</string>
+          <string>5.12</string>
          </property>
         </widget>
        </item>
