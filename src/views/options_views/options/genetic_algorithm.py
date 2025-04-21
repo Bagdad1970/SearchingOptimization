@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QWidget, QSpinBox, QDoubleSpinBox, QLineEdit
 from PyQt6 import uic
 from src.entities.point import Point
+import src.views.options_views.options.option_utils as option_utils
 
 
 class GeneticAlgorithmOptions(QWidget):
@@ -22,7 +23,7 @@ class GeneticAlgorithmOptions(QWidget):
                     continue
 
                 if widget.text() != '':
-                    params[widget_name] = tuple(map(float, widget.text().replace(' ', '').replace(')', '').replace('(', '').split(',')))
+                    params[widget_name] = tuple(map(float, option_utils.split_tuple_param(widget.text())))
 
         return params
 

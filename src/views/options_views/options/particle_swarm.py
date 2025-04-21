@@ -1,12 +1,8 @@
 from collections.abc import Callable
-
 from PyQt6.QtWidgets import QWidget, QSpinBox, QDoubleSpinBox, QLineEdit
 from PyQt6 import uic
 from src.entities.point import Point
-
-
-def split_tuple_param(param: str):
-    return param.strip().replace('(', '').replace(')', '').split(',')
+import src.views.options_views.options.option_utils as option_utils
 
 
 class ParticleSwarmOptions(QWidget):
@@ -21,7 +17,7 @@ class ParticleSwarmOptions(QWidget):
                 widget_name = widget.objectName()
 
                 if widget_name == 'initial_point':
-                    cleared_point = split_tuple_param(widget.text())
+                    cleared_point = option_utils.split_tuple_param(widget.text())
                     point = Point(map(float, cleared_point))
                     function_value = function(*point)
                     point.append(function_value)
@@ -36,7 +32,7 @@ class ParticleSwarmOptions(QWidget):
                 widget_name = widget.objectName()
 
                 if 'range' in widget_name:
-                    params[widget_name] = tuple(map(float, split_tuple_param(widget.text())))
+                    params[widget_name] = tuple(map(float, option_utils.split_tuple_param(widget.text())))
 
         return params
 
