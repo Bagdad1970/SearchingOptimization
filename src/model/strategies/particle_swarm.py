@@ -19,9 +19,9 @@ class Particle:
         self.function = function
         self.min_values = min_values
         self.max_values = max_values
-        self.current_velocity_ratio = current_velocity_ratio
-        self.local_velocity_ratio = local_velocity_ratio
-        self.global_velocity_ratio = global_velocity_ratio
+        self.current_velocity_ratio = current_velocity_ratio  # инерция частицы
+        self.local_velocity_ratio = local_velocity_ratio  # коэффициент когнитивного притяжения
+        self.global_velocity_ratio = global_velocity_ratio  # коэффициент социального притяжения
         self.position = self.particle_position()
         self.velocity = self.particle_velocity()
         self.best_position = self.position.copy()
@@ -37,24 +37,23 @@ class Particle:
         )
 
     def compute_common_ratio(self) -> float:
-        velo_ratio = self.local_velocity_ratio + self.global_velocity_ratio
-        return 2.0 / abs(2.0 - velo_ratio - np.sqrt(velo_ratio ** 2 - 4.0 * velo_ratio))
+        velo_ratio = self.local_velocity_ratio + self.global_velocity_ratio  # сумма когнитивного и социального коэффициентов
+        return 2.0 * self.current_velocity_ratio / abs(2.0 - velo_ratio - np.sqrt(velo_ratio ** 2 - 4.0 * velo_ratio))  # коэффициент сжатия X
 
     def compute_new_velocity(self, common_ratio: float, global_best_position: np.ndarray):
         random_local = np.random.rand(2)
         random_global = np.random.rand(2)
 
         return common_ratio * (
-                self.current_velocity_ratio * self.velocity
+                self.velocity
                 + self.local_velocity_ratio * random_local * (self.best_position - self.position)
                 + self.global_velocity_ratio * random_global * (global_best_position - self.position)
         )
 
     def update(self, global_best_position: np.ndarray):
-        common_ratio = self.compute_common_ratio()
-        self.velocity = self.compute_new_velocity(common_ratio, global_best_position)
-        self.position += self.velocity
-
+        common_ratio = self.compute_common_ratio()  # коэффициент сжатия X
+        self.velocity = self.compute_new_velocity(common_ratio, global_best_position)  # новая скорость
+        self.position += self.velocity  # изменяем положение частицы
         self.position = np.clip(self.position, self.min_values, self.max_values)
 
         value = self.function(*self.position)
@@ -126,7 +125,7 @@ class ParticleSwarm(StrategyInterface):
                 max_values=self.max_values,
                 current_velocity_ratio=self.current_velocity_ratio,
                 local_velocity_ratio=self.local_velocity_ratio,
-                global_velocity_ratio=self.global_velocity_ratio,
+                global_velocity_ratio=self.global_velocity_ratio
             )
             for _ in range(self.swarm_size)
         ]
@@ -165,7 +164,6 @@ class ParticleSwarm(StrategyInterface):
                     self.algorithm_observer.iteration_observer.notify_all(
                         f"Алгоритм остановлен из-за стагнации на итерации {i+1}"
                     )
-                    print(i)
                 break
 
         if self.algorithm_observer:
