@@ -57,6 +57,12 @@ class Presenter:
         elif current_text == "Рой частиц":
             self.model.set_strategy(ParticleSwarm())
             self.options = ParticleSwarmOptions()
+        elif current_text == "Пчелинная колония":
+            self.model.set_strategy(BeeColony())
+            self.options = BeeColonyOptions()
+        elif current_text == "Бактериальная оптимизация":
+            self.model.set_strategy(BacterialForaging())
+            self.options = BacterialForagingOptions()
 
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())

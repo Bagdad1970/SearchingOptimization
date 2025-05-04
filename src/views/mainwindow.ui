@@ -150,6 +150,16 @@
       <string>Рой частиц</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Пчелинная колония</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Бактериальная оптимизация</string>
+     </property>
+    </item>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
