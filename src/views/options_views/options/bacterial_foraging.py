@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QWidget, QSpinBox, QDoubleSpinBox, QLineEdit
 from PyQt6 import uic
 from src.entities.point import Point
 import src.views.options_views.options.option_utils as option_utils
+from PyQt6.QtWidgets import QMessageBox
 
 
 class BacterialForagingOptions(QWidget):
@@ -25,6 +26,7 @@ class BacterialForagingOptions(QWidget):
 
         return params
 
+
     def get_max_min_values(self) -> dict:
         ranges_data = self.get_ranges()
 
@@ -33,6 +35,7 @@ class BacterialForagingOptions(QWidget):
 
         return { 'min_values': min_values, 'max_values': max_values }
 
+
     def get_numeric_params(self):
         params = {}
         for widget in self.findChildren(QWidget):
@@ -40,7 +43,13 @@ class BacterialForagingOptions(QWidget):
                 widget_name = widget.objectName()
                 params[widget_name] = float(widget.value())
 
-        return params
+        is_ok = True
+        if params.get('num_bacteria') % 2 != 0:
+            QMessageBox.critical(None, "Ошибка", 'Число бактерий в популяции должно быть четно')
+            is_ok = False
+
+        return { **params, "is_ok" : is_ok }
+
 
     def get_params(self) -> dict:
         return { **self.get_numeric_params(), **self.get_max_min_values() }

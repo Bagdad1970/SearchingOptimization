@@ -9,6 +9,8 @@ class Bacterium:
         self.bounds = [bounds_lower, bounds_upper]
         self.position = np.random.uniform(self.bounds[0], self.bounds[1], 2)
         self.health = 0.0
+        self.direction = np.random.uniform(-1, 1, 2)
+        self.direction = self.direction / np.linalg.norm(self.direction)
 
     def update_health(self, fitness):
         self.health += fitness
@@ -40,62 +42,71 @@ class BacterialForaging(StrategyInterface):
 
 
     def set_params(self, function, **params):
-        self.function = function_from_str(function)
-        self.iteration_count = int(params.get('iteration_count', self.iteration_count))
-        self.num_bacteria = int(params.get("num_bacteria", 50))
-        self.chemotaxis_steps = int(params.get("chem_steps", 100))
-        self.reproduction_steps = int(params.get("repro_steps", 4))
-        self.elimination_steps = int(params.get("elim_steps", 2))
-        self.step_size = float(params.get("step_size", 0.1))
-        self.elimination_prob = float(params.get("elim_prob", 0.25))
-        self.elimination_count = int(params.get("elim_count", 10))
-        self.bounds_lower = float(params.get("bounds_lower", -5.12))
-        self.bounds_upper = float(params.get("bounds_upper", 5.12))
+        self.is_ok = params.get('is_ok')
+        if self.is_ok:
+            self.function = function_from_str(function)
+            self.iteration_count = int(params.get('iteration_count', self.iteration_count))
+            self.num_bacteria = int(params.get("num_bacteria", 50))
+            self.chemotaxis_steps = int(params.get("chem_steps", 100))
+            self.reproduction_steps = int(params.get("repro_steps", 4))
 
-        self.stagnation_threshold = int(params.get("no_changes_iterations_count", 10))
+            self.elimination_steps = int(params.get("elim_steps", 2))
+            self.step_size = float(params.get("step_size", 0.1))
+            self.elimination_prob = float(params.get("elim_prob", 0.25))
+            self.elimination_count = int(params.get("elim_count", 10))
+            self.bounds_lower = float(params.get("bounds_lower", -5.12))
+            self.bounds_upper = float(params.get("bounds_upper", 5.12))
 
-        self.min_values = params['min_values']
-        self.max_values = params['max_values']
+            self.stagnation_threshold = int(params.get("no_changes_iterations_count", 10))
+
+            self.min_values = params['min_values']
+            self.max_values = params['max_values']
+
 
     def set_algorithm_observer(self, algorithm_observer):
         self.algorithm_observer = algorithm_observer
+
 
     @staticmethod
     def initial_function() -> str:
         return "20 + (x ** 2 - 10 * cos(2 * pi * x)) + (y ** 2 - 10 * cos(2 * pi * y))"
 
+
     def create_initial_population(self):
         return [Bacterium(self.bounds_lower, self.bounds_upper)
                 for _ in range(self.num_bacteria)]
 
+
     def chemotaxis(self, bacteria, step_size):
         for bacterium in bacteria:
+            # Вычисляем текущую пригодность
             current_fitness = self.function(*bacterium.position)
             bacterium.update_health(current_fitness)
 
-            # Генерация случайного направления и нормализация
-            swimming_direction = np.random.uniform(-1, 1, 2)
-            swimming_direction = swimming_direction / np.linalg.norm(swimming_direction)
-
-            new_position = bacterium.position + step_size * swimming_direction
+            # Вычисляем новую позицию по формуле (4.1)
+            new_position = bacterium.position + step_size * bacterium.direction
             new_position = np.clip(new_position, self.bounds_lower, self.bounds_upper)
             new_fitness = self.function(*new_position)
 
-            # Плавание при улучшении
+            # Плавание
             if new_fitness < current_fitness:
                 bacterium.position = new_position
+
                 for _ in range(2):
-                    new_position = bacterium.position + step_size * swimming_direction
+                    # Двигаемся в ТОМ ЖЕ направлении (direction не меняется)
+                    new_position = bacterium.position + step_size * bacterium.direction
                     new_position = np.clip(new_position, self.bounds_lower, self.bounds_upper)
                     new_fitness = self.function(*new_position)
+
                     if new_fitness >= self.function(*bacterium.position):
                         break
+
                     bacterium.position = new_position
             else:
                 # Кувырок
-                swimming_direction = np.random.uniform(-1, 1, 2)
-                swimming_direction = swimming_direction / np.linalg.norm(swimming_direction)
-                bacterium.position += step_size * swimming_direction
+                bacterium.direction = np.random.uniform(-1, 1, 2)
+                bacterium.direction = bacterium.direction / np.linalg.norm(bacterium.direction)
+                bacterium.position += step_size * bacterium.direction
                 bacterium.position = np.clip(bacterium.position, self.bounds_lower, self.bounds_upper)
 
     def reproduction(self, bacteria):
@@ -134,33 +145,34 @@ class BacterialForaging(StrategyInterface):
         return self.stagnation_counter >= self.stagnation_threshold
 
     def execute(self):
-        bacteria_population = self.create_initial_population()
+        if self.is_ok:
+            bacteria_population = self.create_initial_population()
 
-        for iteration in range(self.iteration_count):
-            for elim_step in range(self.elimination_steps):
-                for repro_step in range(self.reproduction_steps):
-                    for chem_step in range(self.chemotaxis_steps):
-                        step_size = self.step_size / (chem_step + 1)
-                        self.chemotaxis(bacteria_population, step_size)
+            for iteration in range(self.iteration_count):
+                for elim_step in range(self.elimination_steps):
+                    for repro_step in range(self.reproduction_steps):
+                        for chem_step in range(self.chemotaxis_steps):
+                            step_size = self.step_size / (chem_step + 1)
+                            self.chemotaxis(bacteria_population, step_size)
 
-                    bacteria_population = self.reproduction(bacteria_population)
+                        bacteria_population = self.reproduction(bacteria_population)
 
-                bacteria_population = self.elimination_and_dispersal(bacteria_population)
-                self.update_best_solution(bacteria_population)
+                    bacteria_population = self.elimination_and_dispersal(bacteria_population)
+                    self.update_best_solution(bacteria_population)
 
-            if self.check_stagnation():
+                if self.check_stagnation():
+                    if self.algorithm_observer:
+                        self.algorithm_observer.iteration_observer.notify_all(
+                            f"Алгоритм остановлен из-за стагнации на итерации {iteration}"
+                        )
+                    break
+
                 if self.algorithm_observer:
                     self.algorithm_observer.iteration_observer.notify_all(
-                        f"Алгоритм остановлен из-за стагнации на итерации {iteration}"
+                        f"Итерация {iteration + 1}: F({self.best_position[0]: .5f}, {self.best_position[1]: .5f}) = {self.best_fitness: .5f}"
                     )
-                break
 
             if self.algorithm_observer:
                 self.algorithm_observer.iteration_observer.notify_all(
-                    f"Итерация {iteration + 1}: F({self.best_position[0]: .5f}, {self.best_position[1]: .5f}) = {-self.best_fitness: .5f}"
+                    f"Результат: точка ({self.best_position[0]:.5f}, {self.best_position[1]:.5f}), значение: {self.best_fitness:.5f}"
                 )
-
-        if self.algorithm_observer:
-            self.algorithm_observer.iteration_observer.notify_all(
-                f"Результат: точка ({self.best_position[0]:.5f}, {self.best_position[1]:.5f}), значение: {-self.best_fitness:.5f}"
-            )
