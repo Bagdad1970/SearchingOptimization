@@ -5,6 +5,8 @@ from .simplex_method import SimplexMethodOptions
 from .bee_colony import BeeColonyOptions
 from .bacterial_foraging import BacterialForagingOptions
 from .immune_system import ImmuneSystemOptions
+from .hybrid import HybridBFO_PSOOptions
+
 
 __all__ = [
     "GeneticAlgorithmOptions",
@@ -14,4 +16,5 @@ __all__ = [
     "BeeColonyOptions",
     "ImmuneSystemOptions",
     "BacterialForagingOptions",
+    "HybridBFO_PSOOptions"
 ]

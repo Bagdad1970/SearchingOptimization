@@ -5,6 +5,7 @@ from .particle_swarm import ParticleSwarm
 from .bee_colony import BeeColony
 from .bacterial_foraging import BacterialForaging
 from .immune_system import ImmuneSystem
+from .hybrid import HybridBFO_PSO
 
 __all__ = [
     "GeneticAlgorithm",
@@ -14,4 +15,5 @@ __all__ = [
     "BeeColony",
     "ImmuneSystem",
     "BacterialForaging",
+    "HybridBFO_PSO"
 ]

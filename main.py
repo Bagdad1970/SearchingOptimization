@@ -5,6 +5,7 @@ from src.model.model import Model
 from src.presenter.presenter import Presenter
 from src.views.mainview import MainView
 
+
 def main():
     app = QApplication(sys.argv)
     view = MainView()

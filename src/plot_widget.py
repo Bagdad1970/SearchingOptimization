@@ -65,12 +65,7 @@ class Matplotlib3DWidget(FigureCanvas):
             point=point,
             area=area)
 
-        print(function)
-        print(point)
-        print(area)
-
         self.draw()
-        print('plot_draw')
 
     def surface_in_point(self, *, function: Callable, point: Point, area: dict):
         x = np.linspace(

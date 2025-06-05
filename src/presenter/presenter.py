@@ -60,9 +60,15 @@ class Presenter:
         elif current_text == "Пчелинная колония":
             self.model.set_strategy(BeeColony())
             self.options = BeeColonyOptions()
+        elif current_text == 'Имунная система':
+            self.model.set_strategy(ImmuneSystem())
+            self.options = ImmuneSystemOptions()
         elif current_text == "Бактериальная оптимизация":
             self.model.set_strategy(BacterialForaging())
             self.options = BacterialForagingOptions()
+        elif current_text == "BFO + PSO":
+            self.model.set_strategy(HybridBFO_PSO())
+            self.options = HybridBFO_PSOOptions()
 
         self.set_option_widget()
         self.view.set_function(self.model.initial_function())

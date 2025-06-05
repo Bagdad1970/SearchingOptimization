@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
-    <height>705</height>
+    <width>352</width>
+    <height>711</height>
    </rect>
   </property>
   <property name="palette">
@@ -507,100 +507,16 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_14">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_13">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Количество пчел-разведчиков:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="scout_bee_count">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="maximum">
-        <number>10000</number>
-       </property>
-       <property name="singleStep">
-        <number>5</number>
-       </property>
-       <property name="value">
-        <number>100</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="QLabel" name="label_5">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Пчел на лучших участках:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="best_bee_count">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>1000</number>
-       </property>
-       <property name="value">
-        <number>7</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Пчелы на остальных участках:</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
+        <string>Количество антител (S_b):</string>
        </property>
       </widget>
      </item>
@@ -618,67 +534,76 @@
       </spacer>
      </item>
      <item>
-      <widget class="QSpinBox" name="selected_bee_count">
+      <widget class="QSpinBox" name="antibody_count">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
-        <number>100</number>
+        <number>10000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
        </property>
        <property name="value">
-        <number>4</number>
+        <number>50</number>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <layout class="QHBoxLayout" name="horizontalLayout_12">
      <item>
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="label_11">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Количество лучших участков:</string>
+        <string>Число лучших отбираемых антител (n_b):</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="best_area_count">
+      <widget class="QSpinBox" name="num_best_antibodies">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
-        <number>100</number>
+        <number>10000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
        </property>
        <property name="value">
-        <number>5</number>
+        <number>10</number>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="label">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Количество выбранных участков:</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
+        <string>Число клонов (n_c):</string>
        </property>
       </widget>
      </item>
@@ -696,41 +621,41 @@
       </spacer>
      </item>
      <item>
-      <widget class="QSpinBox" name="selected_area_count">
+      <widget class="QSpinBox" name="num_clones">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <number>10000</number>
+       </property>
+       <property name="singleStep">
+        <number>5</number>
        </property>
        <property name="value">
-        <number>10</number>
+        <number>25</number>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Размер областей:</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
+        <string>Степерь селекции (b_s):</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_6">
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -743,36 +668,39 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLineEdit" name="range_list">
+      <widget class="QDoubleSpinBox" name="selection_ratio">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
-       <property name="text">
-        <string>(0.5, 0.5)</string>
+       <property name="minimum">
+        <double>0.000000000000000</double>
        </property>
-       <property name="placeholderText">
-        <string>(0.5, 0.5)</string>
+       <property name="maximum">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.050000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.100000000000000</double>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_12">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="label_7">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Коэффициент сжатия:</string>
-       </property>
-       <property name="wordWrap">
-        <bool>false</bool>
+        <string>Коэффициент гибели (b_b):</string>
        </property>
       </widget>
      </item>
@@ -790,7 +718,60 @@
       </spacer>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="no_changes_iterations_count_2">
+      <widget class="QDoubleSpinBox" name="death_ratio">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="minimum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>5.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.050000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.300000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Коэффициент сжатия (b_r):</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="compression_ratio">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -800,10 +781,60 @@
         <double>1.000000000000000</double>
        </property>
        <property name="singleStep">
-        <double>0.010000000000000</double>
+        <double>0.050000000000000</double>
        </property>
        <property name="value">
-        <double>0.950000000000000</double>
+        <double>0.050000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_13">
+     <item>
+      <widget class="QLabel" name="refresh_ratio_label">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Коэффициент обновления (b_n):</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_9">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="refresh_ratio">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="minimum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>5.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.050000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.150000000000000</double>
        </property>
       </widget>
      </item>
@@ -819,10 +850,10 @@
         </font>
        </property>
        <property name="text">
-        <string>Число шагов до стагнации:</string>
+        <string>Остановка по числу итераций:</string>
        </property>
        <property name="wordWrap">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -840,7 +871,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QSpinBox" name="range_stagnation_threshold">
+      <widget class="QSpinBox" name="no_changes_iterations_count">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -850,7 +881,7 @@
         <number>100</number>
        </property>
        <property name="value">
-        <number>10</number>
+        <number>50</number>
        </property>
       </widget>
      </item>
@@ -869,6 +900,19 @@
         <string>Диапазон X:</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QLineEdit" name="x_range">
@@ -900,6 +944,19 @@
         <string>Диапазон Y:</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_11">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QLineEdit" name="y_range">

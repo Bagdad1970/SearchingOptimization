@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 
 from src.function_from_str import function_from_str
@@ -40,9 +42,12 @@ class BacterialForaging(StrategyInterface):
         self.best_fitness = float('inf')
         self.best_position = None
 
+        self.fitness_value_iters = []
+
+        self.is_ok = True
 
     def set_params(self, function, **params):
-        self.is_ok = params.get('is_ok')
+        self.is_ok = True#params.get('is_ok')
         if self.is_ok:
             self.function = function_from_str(function)
             self.iteration_count = int(params.get('iteration_count', self.iteration_count))
@@ -53,14 +58,13 @@ class BacterialForaging(StrategyInterface):
             self.elimination_steps = int(params.get("elim_steps", 2))
             self.step_size = float(params.get("step_size", 0.1))
             self.elimination_prob = float(params.get("elim_prob", 0.25))
-            self.elimination_count = int(params.get("elim_count", 10))
+            self.elimination_count = int(params.get("elim_count", 2))
             self.bounds_lower = float(params.get("bounds_lower", -5.12))
             self.bounds_upper = float(params.get("bounds_upper", 5.12))
 
             self.stagnation_threshold = int(params.get("no_changes_iterations_count", 10))
 
-            self.min_values = params['min_values']
-            self.max_values = params['max_values']
+            self.is_ok = True
 
 
     def set_algorithm_observer(self, algorithm_observer):
@@ -144,8 +148,16 @@ class BacterialForaging(StrategyInterface):
 
         return self.stagnation_counter >= self.stagnation_threshold
 
+    def get_best_value(self):
+        return self.best_fitness
+
+    def get_execute_time(self):
+        return self.execute_time
+
     def execute(self):
         if self.is_ok:
+            time_start = time.time()
+
             bacteria_population = self.create_initial_population()
 
             for iteration in range(self.iteration_count):
@@ -160,6 +172,8 @@ class BacterialForaging(StrategyInterface):
                     bacteria_population = self.elimination_and_dispersal(bacteria_population)
                     self.update_best_solution(bacteria_population)
 
+                print(self.best_fitness)
+
                 if self.check_stagnation():
                     if self.algorithm_observer:
                         self.algorithm_observer.iteration_observer.notify_all(
@@ -172,7 +186,10 @@ class BacterialForaging(StrategyInterface):
                         f"Итерация {iteration + 1}: F({self.best_position[0]: .5f}, {self.best_position[1]: .5f}) = {self.best_fitness: .5f}"
                     )
 
+            self.execute_time = time.time() - time_start
+            print(self.execute_time)
+
             if self.algorithm_observer:
                 self.algorithm_observer.iteration_observer.notify_all(
-                    f"Результат: точка ({self.best_position[0]:.5f}, {self.best_position[1]:.5f}), значение: {self.best_fitness:.5f}"
+                    f"Результат: точка ({self.best_position[0]}, {self.best_position[1]}), значение: {self.best_fitness}"
                 )
